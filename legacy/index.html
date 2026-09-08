@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>อีสปอร์ต ชิงชนะเลิศแห่งจังหวัดจันทบุรี 2569</title>
+<meta name="description" content="การแข่งขันอีสปอร์ตชิงชนะเลิศแห่งจังหวัดจันทบุรี ประจำปี 2569 วันที่ 9–10 กันยายน 2569 ณ โรงเรียนเบญจมราชูทิศ อำเภอเมืองจันทบุรี จังหวัดจันทบุรี">
+<meta name="theme-color" content="#14265C">
+<meta property="og:type" content="website">
+<meta property="og:title" content="อีสปอร์ต ชิงชนะเลิศแห่งจังหวัดจันทบุรี 2569">
+<meta property="og:description" content="9–10 กันยายน 2569 · โรงเรียนเบญจมราชูทิศ จังหวัดจันทบุรี">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chonburi&family=Anuphan:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. TOKENS
+   ============================================================ */
+:root{
+  --paper:#E7E9F0;
+  --card:#FFFFFF;
+  --ink:#0D1730;
+  --navy:#14265C;
+  --royal:#22429E;
+  --gold:#B4841B;
+  --gold-lit:#EAC463;
+  --red:#C0322A;
+  --green:#1E7A52;
+  --mute:#5C6684;
+  --line:rgba(13,23,48,.15);
+  --line-strong:rgba(13,23,48,.32);
+  --shell:min(1180px,100% - 2.5rem);
+  --display:"Chonburi",serif;
+  --body:"Anuphan",system-ui,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-weight:400;font-size:16.5px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  background-image:linear-gradient(rgba(20,38,92,.045) 1px,transparent 1px);
+  background-size:100% 34px;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{margin:0;font-weight:600;line-height:1.25}
+p{margin:0}
+:focus-visible{outline:3px solid var(--royal);outline-offset:3px}
+
+.shell{width:var(--shell);margin-inline:auto}
+.thai-num{font-family:var(--display);font-weight:400;letter-spacing:.01em}
+
+/* ============================================================
+   2. NAV
+   ============================================================ */
+.topbar{
+  position:sticky;top:0;z-index:60;background:rgba(231,233,240,.93);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:64px}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.brand-mark{
+  width:34px;height:34px;flex:none;background:var(--navy);
+  display:grid;place-items:center;color:var(--gold-lit);
+  font-family:var(--display);font-size:15px;
+  clip-path:polygon(50% 0,100% 26%,100% 74%,50% 100%,0 74%,0 26%);
+}
+.brand b{display:block;font-weight:600;font-size:14.5px;line-height:1.15;letter-spacing:.01em}
+.brand span{display:block;font-size:11.5px;color:var(--mute);line-height:1.3}
+.navlinks{display:flex;gap:1.55rem;font-size:14.5px}
+.navlinks a{text-decoration:none;color:var(--mute);padding-block:.35rem;border-bottom:2px solid transparent}
+.navlinks a:hover,.navlinks a.on{color:var(--navy);border-bottom-color:var(--gold)}
+.burger{display:none;background:none;border:1px solid var(--line-strong);padding:.45rem .7rem;font:inherit;font-size:14px;cursor:pointer}
+#drawer{display:none;border-top:1px solid var(--line);padding:.6rem 0 1rem}
+#drawer a{display:block;padding:.55rem 0;text-decoration:none;color:var(--navy);border-bottom:1px solid var(--line)}
+
+@media (max-width:900px){
+  .navlinks{display:none}
+  .burger{display:block}
+  #drawer.open{display:block}
+}
+
+/* ============================================================
+   3. HERO — แผ่นป้ายประกาศ
+   ============================================================ */
+.hero{background:var(--navy);color:#fff;position:relative;overflow:hidden}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(60% 90% at 88% 10%,rgba(234,196,99,.16),transparent 60%),
+    radial-gradient(70% 100% at 5% 100%,rgba(34,66,158,.55),transparent 62%);
+}
+.hero-in{position:relative;padding:3.4rem 0 2.6rem}
+.crest{display:flex;align-items:center;gap:.8rem;font-size:14px;color:var(--gold-lit)}
+.crest::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(234,196,99,.55),transparent)}
+
+.hero h1{
+  font-family:var(--display);font-weight:400;
+  font-size:clamp(2.9rem,10.5vw,6.6rem);line-height:.95;letter-spacing:.005em;
+  margin:1.1rem 0 .5rem;
+  background:linear-gradient(178deg,#FFF6DF 12%,var(--gold-lit) 52%,#A87715 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero-sub{font-size:clamp(1rem,2.4vw,1.22rem);font-weight:500;color:#D9E0F5;max-width:34ch}
+
+.datewrap{
+  margin-top:2.2rem;display:grid;grid-template-columns:auto 1fr;gap:0 1.8rem;align-items:center;
+  border-top:1px solid rgba(255,255,255,.22);border-bottom:1px solid rgba(255,255,255,.22);
+  padding:1.4rem 0;
+}
+.bigdate{
+  font-family:var(--display);font-size:clamp(3.4rem,13vw,7.4rem);line-height:.86;
+  color:#fff;text-shadow:0 0 44px rgba(234,196,99,.34);
+}
+.datemeta{display:flex;flex-direction:column;gap:.15rem;font-size:clamp(.95rem,2.2vw,1.12rem)}
+.datemeta .m1{font-family:var(--display);color:var(--gold-lit);font-size:1.25em}
+.datemeta .m2{color:#C9D3EE}
+.datemeta .m3{color:#8FA0CE;font-size:.86em}
+
+.count{display:flex;gap:.55rem;margin-top:1.5rem;flex-wrap:wrap}
+.cell{
+  min-width:74px;padding:.6rem .75rem;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.16);text-align:center;
+}
+.cell b{display:block;font-family:var(--display);font-size:1.65rem;line-height:1.1;color:#fff;font-variant-numeric:tabular-nums}
+.cell span{display:block;font-size:11.5px;color:#9DACD6;letter-spacing:.06em}
+.count.done{gap:0}
+.count.done .cell{min-width:auto;background:rgba(234,196,99,.14);border-color:rgba(234,196,99,.45)}
+
+.cta{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.7rem}
+.btn{
+  display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;
+  padding:.68rem 1.25rem;font-family:var(--body);font-weight:600;font-size:14.5px;
+  border:1px solid transparent;cursor:pointer;
+}
+.btn-gold{background:var(--gold-lit);color:#33240A}
+.btn-gold:hover{background:#F7D786}
+.btn-line{border-color:rgba(255,255,255,.4);color:#fff}
+.btn-line:hover{background:rgba(255,255,255,.1)}
+.btn-ink{border-color:var(--line-strong);color:var(--navy);background:var(--card)}
+.btn-ink:hover{border-color:var(--navy)}
+
+.orgstrip{
+  background:#0C1A44;color:#8FA0CE;font-size:12.5px;padding:.7rem 0;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.orgstrip .shell{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
+
+/* ============================================================
+   4. SECTIONS
+   ============================================================ */
+section{padding:4.2rem 0}
+.sec-head{margin-bottom:1.9rem;max-width:60ch}
+.sec-head h2{font-family:var(--display);font-weight:400;font-size:clamp(1.65rem,4.4vw,2.35rem);color:var(--navy)}
+.sec-head .rule{width:64px;height:0;border-top:3px solid var(--gold);border-bottom:1px solid var(--gold);margin:.75rem 0 .9rem}
+.sec-head p{color:var(--mute)}
+
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.grid-2{display:grid;grid-template-columns:1.25fr .75fr;gap:1.6rem;align-items:start}
+@media (max-width:980px){.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3,.grid-2{grid-template-columns:1fr}}
+@media (max-width:520px){.grid-4{grid-template-columns:1fr}}
+
+.card{background:var(--card);border:1px solid var(--line);padding:1.25rem 1.35rem}
+.card h3{font-size:1.06rem;color:var(--navy);margin-bottom:.3rem}
+.card p{color:var(--mute);font-size:14.5px}
+.fact{border-left:4px solid var(--gold)}
+.fact dt{font-size:13px;color:var(--mute)}
+.fact dd{margin:.2rem 0 0;font-family:var(--display);font-size:1.5rem;color:var(--navy);line-height:1.2}
+.fact dd small{font-family:var(--body);font-size:13.5px;font-weight:500;color:var(--mute);display:block;margin-top:.15rem}
+
+/* เกมที่แข่ง */
+.game{display:flex;gap:1rem;align-items:flex-start;background:var(--card);border:1px solid var(--line);padding:1.15rem 1.3rem}
+.game .no{
+  font-family:var(--display);font-size:1.5rem;color:var(--gold);line-height:1;
+  border-right:1px solid var(--line);padding-right:1rem;min-width:2.6rem;
+}
+.game h3{font-size:1.05rem;color:var(--navy)}
+.game p{font-size:14px;color:var(--mute)}
+
+/* ============================================================
+   5. กำหนดการ
+   ============================================================ */
+.daytabs{display:flex;gap:0;margin-bottom:1.1rem;border-bottom:1px solid var(--line-strong)}
+.daytab{
+  background:none;border:0;border-bottom:3px solid transparent;margin-bottom:-1px;
+  font:inherit;font-weight:600;color:var(--mute);padding:.6rem 1.15rem;cursor:pointer;
+}
+.daytab[aria-selected="true"]{color:var(--navy);border-bottom-color:var(--navy)}
+.sched{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line)}
+.sched caption{text-align:left;color:var(--mute);font-size:13.5px;padding:.7rem 1rem;border-bottom:1px solid var(--line)}
+.sched th{
+  text-align:left;font-weight:600;font-size:13px;color:var(--mute);
+  padding:.6rem 1rem;border-bottom:1px solid var(--line-strong);
+}
+.sched td{padding:.75rem 1rem;border-bottom:1px solid var(--line);font-size:14.8px;vertical-align:top}
+.sched tr:last-child td{border-bottom:0}
+.sched .t{font-family:var(--display);color:var(--navy);white-space:nowrap;font-size:15px}
+.sched .r{color:var(--mute);font-size:13.5px}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:.1rem .5rem;border:1px solid currentColor}
+.tag.key{color:var(--red)}
+.tag.open{color:var(--green)}
+
+/* ============================================================
+   6. สายการแข่งขัน
+   ============================================================ */
+.bracket-scroll{overflow-x:auto;padding-bottom:.6rem}
+.bracket{display:flex;gap:2.4rem;min-width:820px;align-items:stretch}
+.round{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:1rem}
+.round-name{font-size:13px;font-weight:600;color:var(--mute);margin-bottom:.2rem}
+.match{background:var(--card);border:1px solid var(--line);position:relative}
+.match.live{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,50,42,.1)}
+.slot{display:flex;justify-content:space-between;gap:.7rem;padding:.55rem .8rem;font-size:14.5px}
+.slot+.slot{border-top:1px solid var(--line)}
+.slot .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.slot .sc{font-family:var(--display);color:var(--mute);font-variant-numeric:tabular-nums}
+.slot.win{background:rgba(180,132,27,.09)}
+.slot.win .nm{font-weight:600;color:var(--navy)}
+.slot.win .sc{color:var(--gold)}
+.slot.tbd{color:#94A0BE;font-style:italic}
+.match-cap{font-size:11.5px;color:var(--mute);padding:.3rem .8rem;border-top:1px dashed var(--line)}
+.round:not(:last-child) .match::after{
+  content:"";position:absolute;top:50%;left:100%;width:2.4rem;height:1px;background:var(--line-strong);
+}
+.final .match{border:2px solid var(--gold)}
+
+/* ============================================================
+   7. ทีม
+   ============================================================ */
+.teams{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem}
+@media (max-width:900px){.teams{grid-template-columns:repeat(2,1fr)}}
+.team{background:var(--card);border:1px solid var(--line);padding:.95rem 1.05rem;display:flex;gap:.8rem;align-items:center}
+.seed{font-family:var(--display);color:var(--gold);font-size:1.15rem;line-height:1;min-width:1.5rem}
+.team b{display:block;font-weight:600;font-size:15px;color:var(--navy);line-height:1.3}
+.team span{font-size:12.5px;color:var(--mute)}
+
+/* ============================================================
+   8. กติกา + คำถาม
+   ============================================================ */
+.rule-item{background:var(--card);border:1px solid var(--line);padding:1.1rem 1.25rem}
+.rule-item h3{font-size:1rem;color:var(--navy);margin-bottom:.25rem}
+.rule-item p{font-size:14.3px;color:var(--mute)}
+details.qa{background:var(--card);border:1px solid var(--line);padding:.9rem 1.15rem;margin-bottom:.55rem}
+details.qa summary{cursor:pointer;font-weight:600;color:var(--navy);list-style:none;display:flex;justify-content:space-between;gap:1rem}
+details.qa summary::-webkit-details-marker{display:none}
+details.qa summary::after{content:"+";color:var(--gold);font-family:var(--display);font-size:1.2rem;line-height:1}
+details.qa[open] summary::after{content:"–"}
+details.qa p{margin-top:.5rem;color:var(--mute);font-size:14.5px}
+
+/* ============================================================
+   9. สนามแข่ง
+   ============================================================ */
+.venue{background:var(--navy);color:#D9E0F5}
+.venue .sec-head h2{color:#fff}
+.venue .sec-head p{color:#A9B6DC}
+.venue .sec-head .rule{border-color:var(--gold-lit)}
+.venue-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);padding:1.3rem 1.4rem}
+.venue-card h3{color:#fff;font-size:1.05rem;margin-bottom:.3rem}
+.venue-card p{color:#AFBCE0;font-size:14.5px}
+.vlist{list-style:none;margin:0;padding:0}
+.vlist li{padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.14);display:grid;grid-template-columns:8.5rem 1fr;gap:1rem;font-size:14.6px}
+.vlist li:last-child{border-bottom:0}
+.vlist dt,.vlist .k{color:#8FA0CE;font-size:13.5px}
+.vlist .v{color:#fff}
+
+/* ============================================================
+   10. NOTE + FOOTER
+   ============================================================ */
+.note{
+  border:1px dashed var(--line-strong);background:rgba(255,255,255,.6);
+  padding:1rem 1.2rem;font-size:14px;color:var(--mute);
+}
+.note b{color:var(--navy)}
+footer{background:#0C1A44;color:#A9B6DC;padding:2.8rem 0 2rem;font-size:14px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2rem;padding-bottom:1.8rem}
+@media (max-width:820px){.foot-grid{grid-template-columns:1fr;gap:1.4rem}}
+footer h4{margin:0 0 .6rem;color:#fff;font-size:14px;font-weight:600}
+footer ul{list-style:none;margin:0;padding:0}
+footer li{padding:.2rem 0}
+footer a{color:#A9B6DC;text-decoration:none}
+footer a:hover{color:var(--gold-lit)}
+.foot-end{border-top:1px solid rgba(255,255,255,.14);padding-top:1.1rem;font-size:12.5px;color:#7A8AB8}
+
+/* ============================================================
+   11. MOTION — เปิดหน้าครั้งเดียว
+   ============================================================ */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero .crest,.hero h1,.hero-sub,.datewrap,.count,.cta{animation:rise .7s cubic-bezier(.2,.7,.3,1) backwards}
+.hero h1{animation-delay:.06s}
+.hero-sub{animation-delay:.12s}
+.datewrap{animation-delay:.18s}
+.count{animation-delay:.24s}
+.cta{animation-delay:.3s}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================ NAV ============================ -->
+<header class="topbar">
+  <div class="shell topbar-in">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">จ</span>
+      <span>
+        <b>อีสปอร์ตชิงชนะเลิศแห่งจังหวัดจันทบุรี</b>
+        <span>ประจำปี 2569</span>
+      </span>
+    </a>
+    <nav class="navlinks" aria-label="เมนูหลัก">
+      <a href="#about">รายการแข่ง</a>
+      <a href="#schedule">กำหนดการ</a>
+      <a href="#bracket">สายการแข่งขัน</a>
+      <a href="#teams">ทีมที่เข้าแข่ง</a>
+      <a href="#rules">กติกา</a>
+      <a href="#venue">สนามแข่ง</a>
+    </nav>
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer">เมนู</button>
+  </div>
+  <div class="shell" id="drawer">
+    <a href="#about">รายการแข่ง</a>
+    <a href="#schedule">กำหนดการ</a>
+    <a href="#bracket">สายการแข่งขัน</a>
+    <a href="#teams">ทีมที่เข้าแข่ง</a>
+    <a href="#rules">กติกา</a>
+    <a href="#venue">สนามแข่ง</a>
+  </div>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<div class="hero" id="top">
+  <div class="shell hero-in">
+    <p class="crest">การแข่งขันกีฬาชิงชนะเลิศแห่งจังหวัดจันทบุรี ประจำปี 2569</p>
+
+    <h1>อีสปอร์ต</h1>
+    <p class="hero-sub">สนามคัดตัวแทนจังหวัดจันทบุรี เปิดให้เข้าชมฟรีตลอดสองวันแข่งขัน</p>
+
+    <div class="datewrap">
+      <div class="bigdate">๙–๑๐</div>
+      <div class="datemeta">
+        <span class="m1">กันยายน ๒๕๖๙</span>
+        <span class="m2">โรงเรียนเบญจมราชูทิศ อำเภอเมืองจันทบุรี</span>
+        <span class="m3">9–10 กันยายน 2569 · ลงทะเบียนนักกีฬา 08:30 น.</span>
+      </div>
+    </div>
+
+    <div class="count" id="count" aria-live="polite"></div>
+
+    <div class="cta">
+      <a class="btn btn-gold" href="#schedule">ดูกำหนดการแข่งขัน</a>
+      <a class="btn btn-line" href="#venue">การเดินทางไปสนาม</a>
+    </div>
+  </div>
+</div>
+
+<div class="orgstrip">
+  <div class="shell">
+    <span>จังหวัดจันทบุรี</span>
+    <span>สมาคมกีฬาแห่งจังหวัดจันทบุรี</span>
+    <span>การกีฬาแห่งประเทศไทย (กกท.)</span>
+    <span>กองทุนพัฒนาการกีฬาแห่งชาติ (NSDF)</span>
+  </div>
+</div>
+
+<!-- ============================ ABOUT ============================ -->
+<section id="about">
+  <div class="shell">
+    <div class="sec-head">
+      <h2>รายการที่เปิดแข่ง</h2>
+      <div class="rule"></div>
+      <p>แข่งสองวัน รอบคัดเลือกและรอบแพ้คัดออกในวันแรก รอบรองชนะเลิศถึงรอบชิงชนะเลิศในวันที่สอง</p>
+    </div>
+
+    <div class="grid-4" style="margin-bottom:1.6rem">
+      <div class="card fact"><dl><dt>รูปแบบ</dt><dd>แพ้คัดออก<small>สายเดียว ตัดสินด้วย Bo3</small></dd></dl></div>
+      <div class="card fact"><dl><dt>ทีมเข้าแข่งขัน</dt><dd>8 ทีม<small>ตัวแทนอำเภอละ 1 ทีม</small></dd></dl></div>
+      <div class="card fact"><dl><dt>ผู้เล่นต่อทีม</dt><dd>5 + 1<small>ตัวจริง 5 คน สำรอง 1 คน</small></dd></dl></div>
+      <div class="card fact"><dl><dt>ค่าสมัคร</dt><dd>ไม่มี<small>ผู้ชมเข้าชมฟรี</small></dd></dl></div>
+    </div>
+
+    <div class="grid-3" id="games"></div>
+  </div>
+</section>
+
+<!-- ============================ SCHEDULE ============================ -->
+<section id="schedule" style="padding-top:0">
+  <div class="shell">
+    <div class="sec-head">
+      <h2>กำหนดการ</h2>
+      <div class="rule"></div>
+      <p>เวลาอาจคลาดเคลื่อนได้ตามความเหมาะสมหน้างาน ให้ยึดประกาศของคณะกรรมการที่สนามเป็นหลัก</p>
+    </div>
+
+    <div class="daytabs" role="tablist" aria-label="เลือกวันแข่งขัน">
+      <button class="daytab" role="tab" data-day="0" aria-selected="true">วันที่ 9 กันยายน</button>
+      <button class="daytab" role="tab" data-day="1" aria-selected="false">วันที่ 10 กันยายน</button>
+    </div>
+
+    <table class="sched">
+      <caption id="schedCaption"></caption>
+      <thead>
+        <tr><th scope="col">เวลา</th><th scope="col">รายการ</th><th scope="col">หมายเหตุ</th></tr>
+      </thead>
+      <tbody id="schedBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================ BRACKET ============================ -->
+<section id="bracket" style="padding-top:0">
+  <div class="shell">
+    <div class="sec-head">
+      <h2>สายการแข่งขัน</h2>
+      <div class="rule"></div>
+      <p>ประกบคู่จากการจับสลากต่อหน้าผู้จัดการทีมทุกทีม ผลจะอัปเดตทันทีที่จบแต่ละแมตช์</p>
+    </div>
+
+    <div class="bracket-scroll">
+      <div class="bracket" id="bracketWrap"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TEAMS ============================ -->
+<section id="teams" style="padding-top:0">
+  <div class="shell">
+    <div class="sec-head">
+      <h2>ทีมที่เข้าแข่งขัน</h2>
+      <div class="rule"></div>
+      <p>ตัวแทนจากอำเภอในจังหวัดจันทบุรี เรียงตามลำดับสายที่จับสลากได้</p>
+    </div>
+    <div class="teams" id="teamGrid"></div>
+  </div>
+</section>
+
+<!-- ============================ RULES ============================ -->
+<section id="rules" style="padding-top:0">
+  <div class="shell">
+    <div class="sec-head">
+      <h2>กติกาที่ต้องรู้ก่อนลงสนาม</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="grid-3" id="ruleGrid" style="margin-bottom:2.2rem"></div>
+
+    <div class="sec-head" style="margin-bottom:1rem"><h2 style="font-size:1.35rem">คำถามที่ถามบ่อย</h2></div>
+    <div id="faqWrap"></div>
+  </div>
+</section>
+
+<!-- ============================ VENUE ============================ -->
+<section id="venue" class="venue">
+  <div class="shell">
+    <div class="sec-head">
+      <h2>สนามแข่งขัน</h2>
+      <div class="rule"></div>
+      <p>แข่งขันในสถานที่จริง ไม่มีการถ่ายทอดสดออนไลน์ ผู้สนใจเข้าชมได้ฟรีตลอดงาน</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="venue-card">
+        <h3>โรงเรียนเบญจมราชูทิศ จังหวัดจันทบุรี</h3>
+        <p style="margin-bottom:1rem">ถนนศรียานุสรณ์ ตำบลวัดใหม่ อำเภอเมืองจันทบุรี จังหวัดจันทบุรี</p>
+        <ul class="vlist">
+          <li><span class="k">วันแข่งขัน</span><span class="v">9–10 กันยายน 2569</span></li>
+          <li><span class="k">ลงทะเบียน</span><span class="v">08:30 น. หน้าห้องแข่งขัน</span></li>
+          <li><span class="k">ทางเข้า</span><span class="v">ประตูฝั่งถนนศรียานุสรณ์ ตรงป้อมยาม</span></li>
+          <li><span class="k">ที่จอดรถ</span><span class="v">ลานจอดในโรงเรียน จอดตามป้ายที่เจ้าหน้าที่กำหนด</span></li>
+        </ul>
+        <a class="btn btn-gold" style="margin-top:1.2rem"
+           href="https://www.google.com/maps/search/?api=1&query=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B9%80%E0%B8%9A%E0%B8%8D%E0%B8%88%E0%B8%A1%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%B9%E0%B8%97%E0%B8%B4%E0%B8%A8+%E0%B8%88%E0%B8%B1%E0%B8%99%E0%B8%97%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5"
+           target="_blank" rel="noopener">เปิดแผนที่ Google Maps</a>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="venue-card">
+          <h3>สิ่งที่นักกีฬาต้องเตรียมมา</h3>
+          <p>บัตรประจำตัวประชาชนหรือบัตรนักเรียน อุปกรณ์ส่วนตัวที่อนุญาต และมารายงานตัวก่อนเวลาแข่งอย่างน้อย 30 นาที</p>
+        </div>
+        <div class="venue-card">
+          <h3>ติดต่อฝ่ายจัดการแข่งขัน</h3>
+          <p>สอบถามเรื่องการสมัคร กติกา หรือกำหนดการ ติดต่อผ่านช่องทางประชาสัมพันธ์ของสมาคมกีฬาแห่งจังหวัดจันทบุรี</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ NOTE ============================ -->
+<section style="padding-top:2.4rem;padding-bottom:2.4rem">
+  <div class="shell">
+    <p class="note">
+      <b>หมายเหตุสำหรับผู้ดูแลเว็บ</b> — รายชื่อทีม ผลสาย ตารางเวลา และรายการเกม
+      ในหน้านี้เป็นข้อมูลตัวอย่างสำหรับจัดวางหน้าเว็บ แก้ไขได้ที่ออบเจกต์
+      <b>CONFIG</b> และ <b>DATA</b> ด้านบนสุดของแท็ก <b>&lt;script&gt;</b> ในไฟล์เดียวกันนี้
+    </p>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer>
+  <div class="shell">
+    <div class="foot-grid">
+      <div>
+        <h4>อีสปอร์ต ชิงชนะเลิศแห่งจังหวัดจันทบุรี 2569</h4>
+        <p style="max-width:44ch">การแข่งขันกีฬาชิงชนะเลิศแห่งจังหวัดจันทบุรี ประจำปี 2569
+          จัดแข่งขันวันที่ 9–10 กันยายน 2569 ณ โรงเรียนเบญจมราชูทิศ อำเภอเมืองจันทบุรี</p>
+      </div>
+      <div>
+        <h4>ในหน้านี้</h4>
+        <ul>
+          <li><a href="#about">รายการแข่ง</a></li>
+          <li><a href="#schedule">กำหนดการ</a></li>
+          <li><a href="#bracket">สายการแข่งขัน</a></li>
+          <li><a href="#teams">ทีมที่เข้าแข่ง</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>ผู้สนับสนุนการจัดแข่งขัน</h4>
+        <ul>
+          <li>จังหวัดจันทบุรี</li>
+          <li>สมาคมกีฬาแห่งจังหวัดจันทบุรี</li>
+          <li>การกีฬาแห่งประเทศไทย</li>
+          <li>กองทุนพัฒนาการกีฬาแห่งชาติ</li>
+        </ul>
+      </div>
+    </div>
+    <p class="foot-end">© 2569 การแข่งขันอีสปอร์ตชิงชนะเลิศแห่งจังหวัดจันทบุรี · เว็บไซต์จัดทำเพื่อประชาสัมพันธ์การแข่งขัน</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIG — แก้ไขบ่อยที่สุด
+   ============================================================ */
+const CONFIG = {
+  startISO: "2026-09-09T08:30:00+07:00",   // เวลาเริ่มงาน (ใช้กับนาฬิกานับถอยหลัง)
+  venue: "โรงเรียนเบญจมราชูทิศ จังหวัดจันทบุรี"
+};
+
+/* ============================================================
+   DATA — ข้อมูลตัวอย่าง เปลี่ยนเป็นข้อมูลจริงได้ทั้งหมด
+   ============================================================ */
+const DATA = {
+  games: [
+    { n:"๑", name:"RoV (Arena of Valor)", detail:"ทีมละ 5 คน แข่งแบบ Bo3 ทุกแมตช์ รอบชิงชนะเลิศ Bo5" },
+    { n:"๒", name:"Free Fire", detail:"ทีมละ 4 คน เก็บคะแนนสะสมจากอันดับและจำนวนการกำจัด" },
+    { n:"๓", name:"eFootball", detail:"ประเภทเดี่ยว แข่งสองนัดเหย้า–เยือน ตัดสินด้วยผลรวมประตู" }
+  ],
+
+  teams: [
+    { seed:"๑", name:"ตัวแทนอำเภอเมืองจันทบุรี", note:"เจ้าภาพ" },
+    { seed:"๒", name:"ตัวแทนอำเภอท่าใหม่",       note:"" },
+    { seed:"๓", name:"ตัวแทนอำเภอขลุง",          note:"" },
+    { seed:"๔", name:"ตัวแทนอำเภอแหลมสิงห์",     note:"" },
+    { seed:"๕", name:"ตัวแทนอำเภอมะขาม",         note:"" },
+    { seed:"๖", name:"ตัวแทนอำเภอสอยดาว",        note:"" },
+    { seed:"๗", name:"ตัวแทนอำเภอโป่งน้ำร้อน",    note:"" },
+    { seed:"๘", name:"ตัวแทนอำเภอแก่งหางแมว",    note:"" }
+  ],
+
+  /* st: 'wait' | 'live' | 'done'   w: 'a' | 'b' | null */
+  rounds: [
+    { name:"รอบแปดทีมสุดท้าย", matches:[
+      { cap:"คู่ที่ 1 · 09:30 น.", a:"ตัวแทนอำเภอเมืองจันทบุรี", b:"ตัวแทนอำเภอแก่งหางแมว", sa:2, sb:0, w:"a", st:"done" },
+      { cap:"คู่ที่ 2 · 10:30 น.", a:"ตัวแทนอำเภอท่าใหม่", b:"ตัวแทนอำเภอโป่งน้ำร้อน", sa:1, sb:2, w:"b", st:"done" },
+      { cap:"คู่ที่ 3 · 11:30 น.", a:"ตัวแทนอำเภอขลุง", b:"ตัวแทนอำเภอสอยดาว", sa:1, sb:1, w:null, st:"live" },
+      { cap:"คู่ที่ 4 · 13:00 น.", a:"ตัวแทนอำเภอแหลมสิงห์", b:"ตัวแทนอำเภอมะขาม", sa:null, sb:null, w:null, st:"wait" }
+    ]},
+    { name:"รอบรองชนะเลิศ", matches:[
+      { cap:"10 ก.ย. · 10:00 น.", a:"ตัวแทนอำเภอเมืองจันทบุรี", b:"ตัวแทนอำเภอโป่งน้ำร้อน", sa:null, sb:null, w:null, st:"wait" },
+      { cap:"10 ก.ย. · 11:30 น.", a:null, b:null, sa:null, sb:null, w:null, st:"wait" }
+    ]},
+    { name:"รอบชิงชนะเลิศ", final:true, matches:[
+      { cap:"10 ก.ย. · 14:00 น. · Bo5", a:null, b:null, sa:null, sb:null, w:null, st:"wait" }
+    ]}
+  ],
+
+  schedule: [
+    { title:"วันพุธที่ 9 กันยายน 2569 — รอบคัดเลือกและรอบแปดทีมสุดท้าย", rows:[
+      { t:"08:30", n:"ลงทะเบียนนักกีฬาและตรวจรายชื่อ", r:"นำบัตรประจำตัวมาแสดง", tag:"open" },
+      { t:"09:00", n:"พิธีเปิดการแข่งขันและชี้แจงกติกา", r:"ผู้จัดการทีมทุกทีมเข้าร่วม" },
+      { t:"09:30", n:"รอบแปดทีมสุดท้าย คู่ที่ 1–2", r:"Bo3" },
+      { t:"11:30", n:"รอบแปดทีมสุดท้าย คู่ที่ 3", r:"Bo3" },
+      { t:"12:00", n:"พักกลางวัน", r:"" },
+      { t:"13:00", n:"รอบแปดทีมสุดท้าย คู่ที่ 4", r:"Bo3" },
+      { t:"15:00", n:"ประกาศคู่รอบรองชนะเลิศ", r:"" }
+    ]},
+    { title:"วันพฤหัสบดีที่ 10 กันยายน 2569 — รอบรองชนะเลิศถึงรอบชิงชนะเลิศ", rows:[
+      { t:"09:00", n:"รายงานตัวนักกีฬา", r:"ทีมที่เข้ารอบทุกทีม", tag:"open" },
+      { t:"10:00", n:"รอบรองชนะเลิศ คู่ที่ 1", r:"Bo3" },
+      { t:"11:30", n:"รอบรองชนะเลิศ คู่ที่ 2", r:"Bo3" },
+      { t:"13:00", n:"ชิงอันดับที่ 3", r:"Bo3" },
+      { t:"14:00", n:"รอบชิงชนะเลิศ", r:"Bo5", tag:"key" },
+      { t:"16:00", n:"พิธีมอบรางวัลและปิดการแข่งขัน", r:"" }
+    ]}
+  ],
+
+  rules: [
+    { h:"คุณสมบัติผู้เข้าแข่งขัน", p:"มีภูมิลำเนาหรือกำลังศึกษาอยู่ในจังหวัดจันทบุรี และลงแข่งได้ทีมเดียวตลอดรายการ" },
+    { h:"การรายงานตัว", p:"มาถึงจุดแข่งก่อนเวลาอย่างน้อย 30 นาที เกินเวลา 15 นาทีถือว่าสละสิทธิ์" },
+    { h:"อุปกรณ์", p:"ใช้อุปกรณ์ที่ฝ่ายจัดเตรียมให้ อุปกรณ์ส่วนตัวต้องผ่านการตรวจจากกรรมการก่อนใช้งาน" },
+    { h:"บัญชีผู้เล่น", p:"ใช้บัญชีของตนเองเท่านั้น ห้ามยืมหรือสวมสิทธิ์บัญชีผู้อื่นในทุกกรณี" },
+    { h:"มารยาทในการแข่งขัน", p:"ห้ามใช้ถ้อยคำหยาบคายหรือกระทำการที่รบกวนคู่แข่ง กรรมการมีสิทธิ์ตัดสินให้ปรับแพ้" },
+    { h:"การประท้วง", p:"ยื่นประท้วงต่อกรรมการภายใน 15 นาทีหลังจบแมตช์ คำตัดสินของกรรมการถือเป็นที่สิ้นสุด" }
+  ],
+
+  faq: [
+    { q:"ผู้ชมทั่วไปเข้าชมได้ไหม", a:"เข้าชมได้ฟรีทั้งสองวัน ไม่ต้องลงทะเบียนล่วงหน้า แต่ขอความร่วมมืองดส่งเสียงรบกวนขณะแข่งขัน" },
+    { q:"มีถ่ายทอดสดออนไลน์หรือไม่", a:"การแข่งขันครั้งนี้รับชมได้ที่สนามจริงเท่านั้น" },
+    { q:"เปลี่ยนตัวผู้เล่นกลางรายการได้ไหม", a:"เปลี่ยนได้เฉพาะผู้เล่นสำรองที่แจ้งชื่อไว้ตอนสมัคร และต้องแจ้งกรรมการก่อนเริ่มแมตช์" },
+    { q:"ถ้าติดสอบหรือมีเหตุจำเป็นมาไม่ทัน", a:"แจ้งฝ่ายจัดการแข่งขันล่วงหน้าก่อนวันแข่ง เพื่อพิจารณาปรับลำดับคู่ตามความเหมาะสม" }
+  ]
+};
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* เกม */
+$("#games").innerHTML = DATA.games.map(g => `
+  <article class="game">
+    <div class="no">${esc(g.n)}</div>
+    <div><h3>${esc(g.name)}</h3><p>${esc(g.detail)}</p></div>
+  </article>`).join("");
+
+/* ทีม */
+$("#teamGrid").innerHTML = DATA.teams.map(t => `
+  <div class="team">
+    <span class="seed">${esc(t.seed)}</span>
+    <span><b>${esc(t.name)}</b>${t.note ? `<span>${esc(t.note)}</span>` : ""}</span>
+  </div>`).join("");
+
+/* กติกา */
+$("#ruleGrid").innerHTML = DATA.rules.map(r => `
+  <article class="rule-item"><h3>${esc(r.h)}</h3><p>${esc(r.p)}</p></article>`).join("");
+
+/* คำถาม */
+$("#faqWrap").innerHTML = DATA.faq.map(f => `
+  <details class="qa"><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join("");
+
+/* สาย */
+function slot(name, score, isWin){
+  if(!name) return `<div class="slot tbd"><span class="nm">รอผู้ชนะรอบก่อนหน้า</span><span class="sc">–</span></div>`;
+  return `<div class="slot${isWin ? " win" : ""}">
+    <span class="nm">${esc(name)}</span>
+    <span class="sc">${score === null || score === undefined ? "–" : esc(score)}</span>
+  </div>`;
+}
+$("#bracketWrap").innerHTML = DATA.rounds.map(r => `
+  <div class="round${r.final ? " final" : ""}">
+    <div class="round-name">${esc(r.name)}</div>
+    ${r.matches.map(m => `
+      <article class="match${m.st === "live" ? " live" : ""}">
+        ${slot(m.a, m.sa, m.w === "a")}
+        ${slot(m.b, m.sb, m.w === "b")}
+        <div class="match-cap">${m.st === "live" ? "กำลังแข่ง · " : ""}${esc(m.cap || "")}</div>
+      </article>`).join("")}
+  </div>`).join("");
+
+/* กำหนดการ */
+function drawDay(i){
+  const d = DATA.schedule[i];
+  $("#schedCaption").textContent = d.title;
+  $("#schedBody").innerHTML = d.rows.map(r => `
+    <tr>
+      <td class="t">${esc(r.t)}</td>
+      <td>${esc(r.n)}${r.tag ? ` <span class="tag ${r.tag}">${r.tag === "key" ? "นัดสำคัญ" : "เปิดให้เข้าชม"}</span>` : ""}</td>
+      <td class="r">${esc(r.r || "—")}</td>
+    </tr>`).join("");
+}
+document.querySelectorAll(".daytab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".daytab").forEach(b => b.setAttribute("aria-selected", String(b === btn)));
+    drawDay(Number(btn.dataset.day));
+  });
+});
+drawDay(0);
+
+/* นับถอยหลัง */
+const target = new Date(CONFIG.startISO).getTime();
+function tick(){
+  const diff = target - Date.now();
+  const box = $("#count");
+  if(diff <= 0){
+    box.className = "count done";
+    box.innerHTML = `<div class="cell" style="min-width:auto;padding:.7rem 1.1rem"><b style="font-size:1.15rem">การแข่งขันเริ่มแล้ว</b></div>`;
+    clearInterval(timer);
+    return;
+  }
+  const s = Math.floor(diff / 1000);
+  const parts = [
+    ["วัน", Math.floor(s / 86400)],
+    ["ชั่วโมง", Math.floor(s / 3600) % 24],
+    ["นาที", Math.floor(s / 60) % 60],
+    ["วินาที", s % 60]
+  ];
+  box.innerHTML = parts.map(([l, v]) =>
+    `<div class="cell"><b>${String(v).padStart(2, "0")}</b><span>${l}</span></div>`).join("");
+}
+tick();
+const timer = setInterval(tick, 1000);
+
+/* เมนูมือถือ */
+const burger = $("#burger"), drawer = $("#drawer");
+burger.addEventListener("click", () => {
+  const open = drawer.classList.toggle("open");
+  burger.setAttribute("aria-expanded", String(open));
+});
+drawer.addEventListener("click", e => {
+  if(e.target.tagName === "A"){ drawer.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); }
+});
+
+/* ไฮไลต์เมนูตามตำแหน่งที่เลื่อนอยู่ */
+const links = [...document.querySelectorAll(".navlinks a")];
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if(!en.isIntersecting) return;
+    links.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id));
+  });
+}, { rootMargin: "-45% 0px -50% 0px" });
+["about","schedule","bracket","teams","rules","venue"].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) obs.observe(el);
+});
+</script>
+</body>
+</html>

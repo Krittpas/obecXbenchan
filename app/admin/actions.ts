@@ -1,0 +1,254 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
+import { adminDb } from "@/lib/auth";
+import { createServerSupabase } from "@/lib/supabase/server";
+import { getResource, type Field } from "@/lib/admin-schema";
+import { parseBangkokLocal, slugify } from "@/lib/format";
+import type { RegistrationPlayer } from "@/lib/types";
+
+export type ActionState = { ok: boolean; message: string };
+
+function refreshSite() {
+  revalidatePath("/", "layout");
+}
+
+/* ── เข้าสู่ระบบ ─────────────────────────────────────────── */
+
+export async function signIn(_prev: ActionState, form: FormData): Promise<ActionState> {
+  const email = String(form.get("email") ?? "").trim();
+  const password = String(form.get("password") ?? "");
+
+  const supabase = await createServerSupabase();
+  if (!supabase) {
+    return { ok: false, message: "ยังไม่ได้ตั้งค่า Supabase — ตั้งค่า environment variables ก่อนใช้งานแผงผู้ดูแล" };
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (error || !data.user) {
+    return { ok: false, message: "อีเมลหรือรหัสผ่านไม่ถูกต้อง" };
+  }
+
+  const { data: allowed } = await supabase
+    .from("admins")
+    .select("user_id")
+    .eq("user_id", data.user.id)
+    .maybeSingle();
+
+  if (!allowed) {
+    await supabase.auth.signOut();
+    return { ok: false, message: "บัญชีนี้ยังไม่ได้รับสิทธิ์ผู้ดูแล กรุณาเพิ่ม user_id ลงตาราง admins" };
+  }
+
+  redirect("/admin");
+}
+
+export async function signOut() {
+  const supabase = await createServerSupabase();
+  await supabase?.auth.signOut();
+  redirect("/admin/login");
+}
+
+/* ── CRUD ทั่วไปตามนิยามใน admin-schema ─────────────────── */
+
+function coerce(field: Field, form: FormData): unknown {
+  const raw = form.get(field.name);
+
+  if (field.type === "checkbox") return raw === "on" || raw === "true";
+
+  const value = String(raw ?? "").trim();
+  if (value === "") return field.required ? "" : null;
+
+  if (field.type === "number") {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
+  }
+  if (field.type === "datetime") {
+    return parseBangkokLocal(value)?.toISOString() ?? null;
+  }
+  return value;
+}
+
+export async function upsertRecord(form: FormData): Promise<void> {
+  const resourceKey = String(form.get("__resource") ?? "");
+  const resource = getResource(resourceKey);
+  if (!resource) throw new Error("ไม่รู้จักตารางที่ต้องการแก้ไข");
+
+  const db = await adminDb();
+  const id = String(form.get("__id") ?? "").trim();
+
+  const payload: Record<string, unknown> = {};
+  for (const field of resource.fields) {
+    payload[field.name] = coerce(field, form);
+  }
+
+  /* เติม slug ให้อัตโนมัติถ้าเว้นว่างไว้ */
+  if ("slug" in payload && !payload.slug) {
+    const source = payload[resource.primary];
+    payload.slug = slugify(String(source ?? resourceKey));
+  }
+
+  const query = id
+    ? db.from(resource.table).update(payload).eq("id", id)
+    : db.from(resource.table).insert(payload);
+
+  const { error } = await query;
+  if (error) throw new Error(error.message);
+
+  refreshSite();
+  redirect(`/admin/${resourceKey}?saved=1`);
+}
+
+export async function deleteRecord(form: FormData): Promise<void> {
+  const resourceKey = String(form.get("__resource") ?? "");
+  const resource = getResource(resourceKey);
+  if (!resource) throw new Error("ไม่รู้จักตารางที่ต้องการลบ");
+
+  const id = String(form.get("__id") ?? "").trim();
+  if (!id) throw new Error("ไม่พบรายการที่ต้องการลบ");
+
+  const db = await adminDb();
+  const { error } = await db.from(resource.table).delete().eq("id", id);
+  if (error) throw new Error(error.message);
+
+  refreshSite();
+  redirect(`/admin/${resourceKey}?deleted=1`);
+}
+
+/* ── ควบคุมผลสดหน้างาน ──────────────────────────────────── */
+
+export async function updateScore(form: FormData): Promise<void> {
+  const db = await adminDb();
+  const id = String(form.get("id") ?? "");
+  if (!id) throw new Error("ไม่พบคู่แข่งขัน");
+
+  const scoreA = Number(form.get("score_a") ?? 0);
+  const scoreB = Number(form.get("score_b") ?? 0);
+  const status = String(form.get("status") ?? "wait");
+  const winnerRaw = String(form.get("winner") ?? "");
+
+  /* ถ้าจบแมตช์แล้วยังไม่ได้เลือกผู้ชนะ ให้ตัดสินจากคะแนน */
+  let winner: string | null = winnerRaw || null;
+  if (status === "done" && !winner && scoreA !== scoreB) {
+    winner = scoreA > scoreB ? "a" : "b";
+  }
+  if (status !== "done") winner = null;
+
+  const { error } = await db
+    .from("matches")
+    .update({
+      score_a: Number.isFinite(scoreA) ? scoreA : null,
+      score_b: Number.isFinite(scoreB) ? scoreB : null,
+      status,
+      winner,
+    })
+    .eq("id", id);
+
+  if (error) throw new Error(error.message);
+
+  refreshSite();
+  redirect("/admin/live?saved=1");
+}
+
+/* ── ใบสมัคร ─────────────────────────────────────────────── */
+
+export async function setRegistrationStatus(form: FormData): Promise<void> {
+  const db = await adminDb();
+  const id = String(form.get("id") ?? "");
+  const status = String(form.get("status") ?? "pending");
+  if (!id) throw new Error("ไม่พบใบสมัคร");
+
+  const { error } = await db.from("registrations").update({ status }).eq("id", id);
+  if (error) throw new Error(error.message);
+
+  refreshSite();
+  redirect("/admin/registrations?saved=1");
+}
+
+/** รับรองใบสมัคร แล้วสร้างทีมพร้อมรายชื่อนักกีฬาให้อัตโนมัติ */
+export async function approveRegistration(form: FormData): Promise<void> {
+  const db = await adminDb();
+  const id = String(form.get("id") ?? "");
+  if (!id) throw new Error("ไม่พบใบสมัคร");
+
+  const { data: reg, error: readError } = await db
+    .from("registrations")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (readError || !reg) throw new Error(readError?.message ?? "ไม่พบใบสมัคร");
+
+  const { data: team, error: teamError } = await db
+    .from("teams")
+    .insert({
+      name: reg.team_name,
+      slug: slugify(reg.team_name),
+      school: reg.school,
+      district: reg.district,
+      status: "approved",
+    })
+    .select("id")
+    .single();
+  if (teamError || !team) throw new Error(teamError?.message ?? "สร้างทีมไม่สำเร็จ");
+
+  const players = (reg.players ?? []) as RegistrationPlayer[];
+  if (players.length > 0) {
+    const { error: playerError } = await db.from("players").insert(
+      players.map((p, i) => ({
+        team_id: team.id,
+        name: p.name,
+        ign: p.ign || null,
+        role: p.role || null,
+        is_sub: Boolean(p.is_sub),
+        sort: i + 1,
+      })),
+    );
+    if (playerError) throw new Error(playerError.message);
+  }
+
+  const { error: statusError } = await db
+    .from("registrations")
+    .update({ status: "approved" })
+    .eq("id", id);
+  if (statusError) throw new Error(statusError.message);
+
+  refreshSite();
+  redirect("/admin/registrations?approved=1");
+}
+
+/* ── ตั้งค่างาน ─────────────────────────────────────────── */
+
+const SETTINGS_TEXT_FIELDS = [
+  "event_name",
+  "event_short",
+  "tagline",
+  "venue_name",
+  "venue_address",
+  "venue_maps_url",
+  "live_note",
+  "contact_line",
+  "contact_phone",
+  "contact_facebook",
+] as const;
+
+export async function saveSettings(form: FormData): Promise<void> {
+  const db = await adminDb();
+
+  const payload: Record<string, unknown> = { id: 1 };
+  for (const key of SETTINGS_TEXT_FIELDS) {
+    payload[key] = String(form.get(key) ?? "").trim();
+  }
+  for (const key of ["start_at", "end_at", "register_deadline"] as const) {
+    const date = parseBangkokLocal(String(form.get(key) ?? ""));
+    payload[key] = date ? date.toISOString() : null;
+  }
+  payload.register_open = form.get("register_open") === "on";
+
+  const { error } = await db.from("settings").upsert(payload, { onConflict: "id" });
+  if (error) throw new Error(error.message);
+
+  refreshSite();
+  redirect("/admin/settings?saved=1");
+}
