@@ -1,4 +1,6 @@
 node_modules/
+npm-cache/
+npm-tmp/
 .next/
 out/
 build/

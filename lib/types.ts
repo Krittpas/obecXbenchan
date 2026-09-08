@@ -137,6 +137,21 @@ export type Prize = {
   sort: number;
 };
 
+export type BannedSkin = {
+  id: string;
+  hero: string;
+  skin: string;
+  sort: number;
+};
+
+export type Penalty = {
+  id: string;
+  offense: string;
+  first_offense: string;
+  second_offense: string | null;
+  sort: number;
+};
+
 export type Sponsor = {
   id: string;
   name: string;

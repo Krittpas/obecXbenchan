@@ -5,7 +5,9 @@ import {
   fallbackGallery,
   fallbackGames,
   fallbackMatches,
+  fallbackBannedSkins,
   fallbackNews,
+  fallbackPenalties,
   fallbackPrizes,
   fallbackRules,
   fallbackSchedule,
@@ -15,12 +17,14 @@ import {
 } from "./fallback";
 import { publicSupabase } from "./supabase/public";
 import type {
+  BannedSkin,
   Division,
   Faq,
   GalleryItem,
   Game,
   Match,
   NewsPost,
+  Penalty,
   Prize,
   Round,
   Rule,
@@ -167,6 +171,17 @@ export async function getGallery(): Promise<GalleryItem[]> {
 
 export async function getPrizes(): Promise<Prize[]> {
   return read<Prize[]>((db) => db.from("prizes").select("*").order("sort"), fallbackPrizes);
+}
+
+export async function getBannedSkins(): Promise<BannedSkin[]> {
+  return read<BannedSkin[]>(
+    (db) => db.from("banned_skins").select("*").order("sort"),
+    fallbackBannedSkins,
+  );
+}
+
+export async function getPenalties(): Promise<Penalty[]> {
+  return read<Penalty[]>((db) => db.from("penalties").select("*").order("sort"), fallbackPenalties);
 }
 
 export async function getSponsors(): Promise<Sponsor[]> {

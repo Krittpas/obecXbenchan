@@ -1255,6 +1255,28 @@ textarea:focus {
   color: var(--navy);
   margin-bottom: 0.5rem;
 }
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14.5px;
+}
+.checklist li {
+  position: relative;
+  padding: 0.4rem 0 0.4rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.checklist li:last-child {
+  border-bottom: 0;
+}
+.checklist li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-weight: 700;
+}
+
 .vlist {
   list-style: none;
   padding: 0;

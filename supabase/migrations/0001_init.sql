@@ -190,6 +190,23 @@ create table if not exists public.prizes (
   sort int not null default 0
 );
 
+-- ── สกินที่ห้ามใช้ (ระเบียบข้อ 5.6) ─────────────────────────
+create table if not exists public.banned_skins (
+  id uuid primary key default gen_random_uuid(),
+  hero text not null,
+  skin text not null,
+  sort int not null default 0
+);
+
+-- ── ตารางสรุปบทลงโทษ (ระเบียบข้อ 6.7) ───────────────────────
+create table if not exists public.penalties (
+  id uuid primary key default gen_random_uuid(),
+  offense text not null,
+  first_offense text not null default '',
+  second_offense text,
+  sort int not null default 0
+);
+
 create table if not exists public.sponsors (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -216,6 +233,8 @@ alter table public.news enable row level security;
 alter table public.gallery enable row level security;
 alter table public.sponsors enable row level security;
 alter table public.prizes enable row level security;
+alter table public.banned_skins enable row level security;
+alter table public.penalties enable row level security;
 
 -- ผู้ดูแลอ่านแถวของตัวเองได้ เพื่อให้เว็บตรวจสิทธิ์ได้
 drop policy if exists admins_read_self on public.admins;
@@ -229,7 +248,7 @@ declare
 begin
   foreach t in array array[
     'settings', 'games', 'teams', 'players', 'matches',
-    'schedule_items', 'rules', 'faqs', 'news', 'gallery', 'sponsors', 'prizes'
+    'schedule_items', 'rules', 'faqs', 'news', 'gallery', 'sponsors', 'prizes', 'banned_skins', 'penalties'
   ]
   loop
     execute format('drop policy if exists %I_public_read on public.%I', t, t);
