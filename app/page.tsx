@@ -4,7 +4,18 @@ import Countdown from "@/components/Countdown";
 import MatchCard from "@/components/MatchCard";
 import ScheduleTabs from "@/components/ScheduleTabs";
 import { FaqList, SectionHead, TeamCard } from "@/components/ui";
-import { getFaqs, getGames, getMatches, getNews, getSchedule, getSettings, getSponsors, getTeams } from "@/lib/queries";
+import {
+  byDivision,
+  getFaqs,
+  getGames,
+  getMatches,
+  getNews,
+  getSchedule,
+  getSettings,
+  getSponsors,
+  getTeams,
+} from "@/lib/queries";
+import { DIVISION_LABEL, type Division } from "@/lib/types";
 import { TZ, thaiDate, thaiDateTimeShort, toThaiDigits } from "@/lib/format";
 
 export const revalidate = 60;
@@ -34,6 +45,8 @@ export default async function HomePage() {
 
   const startDay = toThaiDigits(dayNumber(settings.start_at));
   const endDay = toThaiDigits(dayNumber(settings.end_at));
+  const teamsByDiv = byDivision(teams);
+  const divisions: Division[] = ["junior", "senior"];
   const upcoming = matches
     .filter((m) => m.status !== "done")
     .sort((a, b) => (a.scheduled_at ?? "").localeCompare(b.scheduled_at ?? ""))
@@ -44,7 +57,7 @@ export default async function HomePage() {
       {/* ── ฮีโร่ ── */}
       <div className="hero" id="top">
         <div className="shell hero-in">
-          <p className="crest">การแข่งขันกีฬาอีสปอร์ตนักเรียน สังกัด สพฐ. ประจำปี 2569</p>
+          <p className="crest">การแข่งขันกีฬาอีสปอร์ต RoV นักเรียน สังกัด สพฐ. ประจำปี 2569</p>
 
           <h1>{settings.event_short}</h1>
           <p className="hero-sub">{settings.tagline}</p>
@@ -98,7 +111,7 @@ export default async function HomePage() {
         <div className="shell">
           <SectionHead
             title="รายการที่เปิดแข่ง"
-            lead="แข่งขันสองวัน รอบคัดเลือกและรอบแพ้คัดออกในวันแรก รอบรองชนะเลิศถึงรอบชิงชนะเลิศในวันที่สอง"
+            lead="แข่งขัน RoV รายการเดียว แบ่งเป็นรุ่น ม.ต้น และรุ่น ม.ปลาย ชิงแชมป์รุ่นละหนึ่งทีม"
           />
 
           <div className="grid-4" style={{ marginBottom: "1.6rem" }}>
@@ -107,7 +120,7 @@ export default async function HomePage() {
                 <dt>รูปแบบการแข่งขัน</dt>
                 <dd>
                   แพ้คัดออก
-                  <small>สายเดียว ตัดสินด้วย Bo3</small>
+                  <small>สายเดียว Bo3 · รอบชิงชนะเลิศ Bo5</small>
                 </dd>
               </dl>
             </div>
@@ -116,7 +129,9 @@ export default async function HomePage() {
                 <dt>ทีมเข้าแข่งขัน</dt>
                 <dd>
                   {teams.length} ทีม
-                  <small>ตัวแทนโรงเรียนละ 1 ทีม</small>
+                  <small>
+                    ม.ต้น {teamsByDiv.junior.length} ทีม · ม.ปลาย {teamsByDiv.senior.length} ทีม
+                  </small>
                 </dd>
               </dl>
             </div>
@@ -160,7 +175,7 @@ export default async function HomePage() {
         <section style={{ paddingTop: 0 }}>
           <div className="shell">
             <SectionHead
-              title="คู่ที่กำลังจะถึง"
+              title="คู่แรกที่ลงสนาม"
               lead={settings.live_note}
               action={
                 <Link className="btn btn-ink" href="/live">
@@ -198,18 +213,26 @@ export default async function HomePage() {
         <div className="shell">
           <SectionHead
             title="ทีมที่เข้าแข่งขัน"
-            lead="ตัวแทนโรงเรียนในจังหวัดจันทบุรีและพื้นที่ใกล้เคียง เรียงตามลำดับสายที่จับสลากได้"
+            lead="ทีมนักเรียนโรงเรียนเบญจมราชูทิศ จังหวัดจันทบุรี เรียงตามลำดับทีมวางในผังสาย"
             action={
               <Link className="btn btn-ink" href="/teams">
-                ดูรายชื่อนักกีฬา
+                ดูรายชื่อนักกีฬาทั้งหมด
               </Link>
             }
           />
-          <div className="teams">
-            {teams.slice(0, 8).map((t) => (
-              <TeamCard key={t.id} team={t} />
-            ))}
-          </div>
+          {divisions.map((division) => (
+            <div key={division} style={{ marginBottom: "1.8rem" }}>
+              <div className="div-head">
+                <h2>{DIVISION_LABEL[division]}</h2>
+                <span className="meta">{teamsByDiv[division].length} ทีม</span>
+              </div>
+              <div className="teams">
+                {teamsByDiv[division].slice(0, 4).map((t) => (
+                  <TeamCard key={t.id} team={t} />
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

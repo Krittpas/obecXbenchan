@@ -1,7 +1,9 @@
-/* โดเมนหลักของงาน OBEC × BENCHAMA ESPORTS
+/* โดเมนหลักของงาน OBEC × BENCHAN ESPORTS
    ชนิดข้อมูลตรงกับตารางใน supabase/migrations/0001_init.sql */
 
 export type MatchStatus = "wait" | "live" | "done";
+/** รุ่นการแข่งขัน — junior = ม.ต้น, senior = ม.ปลาย */
+export type Division = "junior" | "senior";
 export type Side = "a" | "b";
 export type RegistrationStatus = "pending" | "approved" | "rejected";
 export type TeamStatus = "pending" | "approved";
@@ -39,6 +41,8 @@ export type Player = {
   team_id: string;
   name: string;
   ign: string | null;
+  /** ระดับชั้น เช่น ม.5/4 */
+  level: string | null;
   role: string | null;
   is_sub: boolean;
   sort: number;
@@ -50,6 +54,9 @@ export type Team = {
   name: string;
   school: string | null;
   district: string | null;
+  division: Division | null;
+  /** ครูผู้ควบคุมทีม */
+  teacher: string | null;
   seed: number | null;
   logo_url: string | null;
   note: string | null;
@@ -62,11 +69,15 @@ export type Match = {
   id: string;
   code: string;
   game_slug: string;
+  division: Division | null;
   round_name: string;
   round_order: number;
   slot: number;
   team_a_id: string | null;
   team_b_id: string | null;
+  /** ข้อความแทนชื่อทีมเมื่อยังไม่ทราบผู้ผ่านเข้ารอบ เช่น "ผู้ชนะคู่ J-A" */
+  label_a: string | null;
+  label_b: string | null;
   score_a: number | null;
   score_b: number | null;
   best_of: number;
@@ -144,3 +155,8 @@ export type Registration = {
 };
 
 export type Round = { name: string; order: number; matches: Match[] };
+
+export const DIVISION_LABEL: Record<Division, string> = {
+  junior: "รุ่น ม.ต้น",
+  senior: "รุ่น ม.ปลาย",
+};

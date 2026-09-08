@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import MatchCard from "@/components/MatchCard";
 import { PageHead, SectionHead } from "@/components/ui";
 import { getMatches, getTeam, getTeams } from "@/lib/queries";
+import { DIVISION_LABEL } from "@/lib/types";
 
 export const revalidate = 60;
 
@@ -38,7 +39,7 @@ export default async function TeamPage({ params }: Params) {
   return (
     <>
       <PageHead
-        kicker={team.district ? `ตัวแทนอำเภอ${team.district}` : "TEAM"}
+        kicker={team.division ? DIVISION_LABEL[team.division] : "TEAM"}
         title={team.name}
         lead={team.school ?? undefined}
       />
@@ -46,7 +47,8 @@ export default async function TeamPage({ params }: Params) {
       <section>
         <div className="shell">
           <div className="row" style={{ marginBottom: "1.6rem" }}>
-            <span className="pill pill-gold">สายที่ {team.seed ?? "–"}</span>
+            {team.seed ? <span className="pill pill-gold">ทีมวางอันดับ {team.seed}</span> : null}
+            {team.teacher && <span className="pill pill-wait">ครูผู้ควบคุม: {team.teacher}</span>}
             {team.note && <span className="pill pill-wait">{team.note}</span>}
             <Link className="btn btn-ink btn-sm" href="/teams">
               ← กลับไปหน้ารายชื่อทีม
@@ -63,8 +65,8 @@ export default async function TeamPage({ params }: Params) {
                   <div className="player" key={p.id}>
                     <b>{p.name}</b>
                     <span>
-                      {p.ign ? `IGN: ${p.ign}` : "—"}
-                      {p.role ? ` · ${p.role}` : ""}
+                      {[p.level, p.ign ? `IGN: ${p.ign}` : null, p.role].filter(Boolean).join(" · ") ||
+                        "—"}
                     </span>
                   </div>
                 ))}

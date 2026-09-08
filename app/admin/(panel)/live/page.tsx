@@ -1,6 +1,7 @@
 import { updateScore } from "../../actions";
 import { getMatches } from "@/lib/queries";
 import { thaiDateTimeShort } from "@/lib/format";
+import { DIVISION_LABEL } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -31,12 +32,16 @@ export default async function AdminLivePage({ searchParams }: Props) {
         matches.map((m) => (
           <div className="panel" key={m.id}>
             <h2>
-              {m.code} · {m.round_name} · {thaiDateTimeShort(m.scheduled_at)}
+              คู่ {m.code} · {m.division ? `${DIVISION_LABEL[m.division]} · ` : ""}
+              {m.round_name}
+              {m.scheduled_at ? ` · ${thaiDateTimeShort(m.scheduled_at)}` : ""}
             </h2>
             <form action={updateScore} className="inline-form">
               <input type="hidden" name="id" value={m.id} />
 
-              <span style={{ minWidth: "12rem", fontWeight: 600 }}>{m.team_a?.name ?? "รอทีม"}</span>
+              <span style={{ minWidth: "12rem", fontWeight: 600 }}>
+                {m.team_a?.name ?? m.label_a ?? "รอทีม"}
+              </span>
               <input
                 className="score-input"
                 type="number"
@@ -54,7 +59,9 @@ export default async function AdminLivePage({ searchParams }: Props) {
                 defaultValue={m.score_b ?? 0}
                 aria-label={`คะแนน ${m.team_b?.name ?? "ทีม B"}`}
               />
-              <span style={{ minWidth: "12rem", fontWeight: 600 }}>{m.team_b?.name ?? "รอทีม"}</span>
+              <span style={{ minWidth: "12rem", fontWeight: 600 }}>
+                {m.team_b?.name ?? m.label_b ?? "รอทีม"}
+              </span>
 
               <select name="status" defaultValue={m.status} aria-label="สถานะ">
                 <option value="wait">รอแข่ง</option>

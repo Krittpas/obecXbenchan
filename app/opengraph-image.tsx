@@ -3,7 +3,7 @@ import { getSettings } from "@/lib/queries";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "OBEC × BENCHAMA ESPORTS CHAMPIONSHIP";
+export const alt = "OBEC × BENCHAN ESPORTS";
 
 /* ใช้ตัวอักษรละตินล้วน เพราะฟอนต์ระบบของ ImageResponse ไม่มีสระ/วรรณยุกต์ไทย */
 export default async function Image() {
@@ -29,14 +29,14 @@ export default async function Image() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16, color: "#EAC463", fontSize: 26 }}>
           <div style={{ width: 44, height: 44, background: "#EAC463" }} />
-          OBEC ESPORTS CHAMPIONSHIP
+          OBEC ESPORTS 2569
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           <div style={{ fontSize: 96, fontWeight: 700, lineHeight: 1.05, color: "#EAC463" }}>
-            OBEC × BENCHAMA
+            OBEC × BENCHAN
           </div>
-          <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05 }}>ESPORTS 2569</div>
+          <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05 }}>RoV 2569</div>
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 30, color: "#C9D3EE" }}>

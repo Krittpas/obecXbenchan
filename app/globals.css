@@ -1,5 +1,5 @@
 /* ============================================================
-   OBEC × BENCHAMA ESPORTS — ระบบดีไซน์
+   OBEC × BENCHAN ESPORTS — ระบบดีไซน์
    โทนกรม–ทอง อ่านง่ายแบบเอกสารราชการ ผสมความคมของกีฬาอีสปอร์ต
    ============================================================ */
 
@@ -751,6 +751,11 @@ tr.is-open td {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.side .sd {
+  font-size: 11px;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
 .side .sc {
   font-family: var(--display);
   font-size: 1.05rem;
@@ -802,6 +807,48 @@ tr.is-open td {
 }
 .pill-gold {
   color: var(--gold);
+}
+
+/* ── รุ่นการแข่งขัน ──────────────────────────────────────── */
+.div-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-bottom: 2px solid var(--navy);
+  padding-bottom: 0.5rem;
+  margin: 0 0 1.1rem;
+}
+.div-head h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: var(--navy);
+}
+.div-head .meta {
+  font-size: 13px;
+  color: var(--mute);
+}
+.jumpnav {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.6rem;
+}
+.jumpnav a {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  color: var(--navy);
+  text-decoration: none;
+}
+.jumpnav a:hover {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
 }
 
 /* ── ทีม ─────────────────────────────────────────────────── */

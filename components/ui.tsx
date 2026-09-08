@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import type { Faq, Match, Team } from "@/lib/types";
+import { DIVISION_LABEL, type Faq, type Match, type Team } from "@/lib/types";
 import { thaiDateTimeShort } from "@/lib/format";
 
 export function SectionHead({
@@ -52,7 +52,10 @@ export function TeamCard({ team }: { team: Team }) {
       </span>
       <span>
         <h3>{team.name}</h3>
-        <span className="school">{team.school ?? team.district ?? ""}</span>
+        <span className="school">
+          {team.division ? DIVISION_LABEL[team.division] : "ยังไม่ระบุรุ่น"}
+          {team.teacher ? ` · ครู${team.teacher}` : ""}
+        </span>
         {team.note && <span className="tag"> · {team.note}</span>}
       </span>
     </Link>
@@ -76,14 +79,15 @@ export function FaqList({ faqs }: { faqs: Faq[] }) {
 export function LiveBar({ matches }: { matches: Match[] }) {
   const live = matches.find((m) => m.status === "live");
   if (!live) return null;
-  const a = live.team_a?.name ?? "TBD";
-  const b = live.team_b?.name ?? "TBD";
+  const a = live.team_a?.name ?? live.label_a ?? "TBD";
+  const b = live.team_b?.name ?? live.label_b ?? "TBD";
   return (
     <div className="livebar">
       <div className="shell">
         <span className="pulse" aria-hidden="true" />
         <b>กำลังแข่ง</b>
         <span>
+          {live.division ? `${DIVISION_LABEL[live.division]} · ` : ""}
           {live.round_name} · {a} {live.score_a ?? 0} – {live.score_b ?? 0} {b}
         </span>
         <span className="mute" style={{ color: "rgba(255,255,255,.75)" }}>

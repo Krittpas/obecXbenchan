@@ -14,6 +14,7 @@ import {
 } from "./fallback";
 import { publicSupabase } from "./supabase/public";
 import type {
+  Division,
   Faq,
   GalleryItem,
   Game,
@@ -62,6 +63,7 @@ export async function getTeams(): Promise<Team[]> {
         .from("teams")
         .select("*, players(*)")
         .eq("status", "approved")
+        .order("division", { ascending: true })
         .order("seed", { ascending: true, nullsFirst: false }),
     fallbackTeams,
   );
@@ -83,9 +85,21 @@ const MATCH_SELECT =
 
 export async function getMatches(): Promise<Match[]> {
   return read<Match[]>(
-    (db) => db.from("matches").select(MATCH_SELECT).order("round_order").order("slot"),
+    (db) =>
+      db.from("matches").select(MATCH_SELECT).order("division").order("round_order").order("slot"),
     fallbackMatches,
   );
+}
+
+export const DIVISIONS: Division[] = ["junior", "senior"];
+
+/** แยกข้อมูลตามรุ่น ม.ต้น / ม.ปลาย โดยคงลำดับเดิมไว้ */
+export function byDivision<T extends { division: Division | null }>(rows: T[]) {
+  return {
+    junior: rows.filter((r) => r.division === "junior"),
+    senior: rows.filter((r) => r.division === "senior"),
+    none: rows.filter((r) => !r.division),
+  };
 }
 
 /** จัดกลุ่มแมตช์เป็นรอบ เรียงตามลำดับรอบ ใช้วาดผังสายการแข่งขัน */

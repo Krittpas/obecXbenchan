@@ -36,6 +36,12 @@ export type Resource = {
   secondary?: string[];
 };
 
+const DIVISION_OPTIONS = [
+  { value: "", label: "— ยังไม่ระบุรุ่น —" },
+  { value: "junior", label: "รุ่น ม.ต้น" },
+  { value: "senior", label: "รุ่น ม.ปลาย" },
+];
+
 const STATUS_OPTIONS = [
   { value: "wait", label: "รอแข่ง" },
   { value: "live", label: "กำลังแข่ง" },
@@ -50,19 +56,28 @@ export const RESOURCES: Resource[] = [
     singular: "คู่แข่งขัน",
     lead: "จัดการรอบ คู่ ผลคะแนน และสถานะการแข่งขันทั้งหมด",
     orderBy: [
+      { column: "division", ascending: true },
       { column: "round_order", ascending: true },
       { column: "slot", ascending: true },
     ],
     primary: "code",
-    secondary: ["round_name", "status"],
+    secondary: ["division", "round_name", "status"],
     fields: [
       { name: "code", label: "รหัสคู่", type: "text", required: true, hint: "เช่น QF1, SF2, F" },
+      { name: "division", label: "รุ่น", type: "select", options: DIVISION_OPTIONS },
       { name: "round_name", label: "ชื่อรอบ", type: "text", required: true },
       { name: "round_order", label: "ลำดับรอบ", type: "number", required: true, hint: "1 = รอบแรกสุด" },
       { name: "slot", label: "ลำดับคู่ในรอบ", type: "number", required: true },
-      { name: "game_slug", label: "รายการ", type: "text", hint: "rov / freefire / efootball" },
+      { name: "game_slug", label: "รายการ", type: "text", hint: "rov" },
       { name: "team_a_id", label: "ทีม A", type: "team" },
       { name: "team_b_id", label: "ทีม B", type: "team" },
+      {
+        name: "label_a",
+        label: "ข้อความแทนทีม A",
+        type: "text",
+        hint: "ใช้เมื่อยังไม่ทราบทีม เช่น ผู้ชนะคู่ J-A",
+      },
+      { name: "label_b", label: "ข้อความแทนทีม B", type: "text" },
       { name: "score_a", label: "คะแนน A", type: "number" },
       { name: "score_b", label: "คะแนน B", type: "number" },
       { name: "best_of", label: "Best of", type: "number" },
@@ -86,16 +101,21 @@ export const RESOURCES: Resource[] = [
     table: "teams",
     title: "ทีมที่เข้าแข่งขัน",
     singular: "ทีม",
-    lead: "ข้อมูลทีม สถานศึกษา ลำดับสาย และสถานะการรับรอง",
-    orderBy: [{ column: "seed", ascending: true }],
+    lead: "ข้อมูลทีม รุ่น ครูผู้ควบคุม ลำดับทีมวาง และสถานะการรับรอง",
+    orderBy: [
+      { column: "division", ascending: true },
+      { column: "seed", ascending: true },
+    ],
     primary: "name",
-    secondary: ["school", "status"],
+    secondary: ["division", "seed", "status"],
     fields: [
       { name: "name", label: "ชื่อทีม", type: "text", required: true },
-      { name: "slug", label: "slug", type: "text", required: true, hint: "ใช้ในลิงก์ เช่น benchama-dragons" },
+      { name: "slug", label: "slug", type: "text", required: true, hint: "ใช้ในลิงก์ เช่น benchan-esports" },
       { name: "school", label: "สถานศึกษา", type: "text" },
       { name: "district", label: "อำเภอ / เขตพื้นที่", type: "text" },
-      { name: "seed", label: "ลำดับสาย", type: "number" },
+      { name: "division", label: "รุ่น", type: "select", options: DIVISION_OPTIONS },
+      { name: "teacher", label: "ครูผู้ควบคุมทีม", type: "text" },
+      { name: "seed", label: "ทีมวางอันดับ", type: "number" },
       { name: "color", label: "สีประจำทีม", type: "color" },
       { name: "logo_url", label: "ลิงก์โลโก้", type: "url" },
       { name: "note", label: "หมายเหตุ", type: "text" },
@@ -118,11 +138,12 @@ export const RESOURCES: Resource[] = [
     lead: "รายชื่อผู้เล่นรายทีม ระบุตัวจริงและตัวสำรอง",
     orderBy: [{ column: "sort", ascending: true }],
     primary: "name",
-    secondary: ["ign", "role"],
+    secondary: ["level", "ign", "role"],
     fields: [
       { name: "team_id", label: "ทีม", type: "team", required: true },
       { name: "name", label: "ชื่อ–สกุล", type: "text", required: true },
       { name: "ign", label: "ชื่อในเกม (IGN)", type: "text" },
+      { name: "level", label: "ระดับชั้น", type: "text", hint: "เช่น ม.5/4" },
       { name: "role", label: "ตำแหน่ง", type: "text" },
       { name: "is_sub", label: "เป็นตัวสำรอง", type: "checkbox" },
       { name: "sort", label: "ลำดับ", type: "number" },

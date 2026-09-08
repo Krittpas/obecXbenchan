@@ -1,5 +1,5 @@
 -- ============================================================
---  OBEC × BENCHAMA ESPORTS — โครงสร้างฐานข้อมูล
+--  OBEC × BENCHAN ESPORTS — โครงสร้างฐานข้อมูล
 --  รันไฟล์นี้ใน Supabase → SQL Editor (รันครั้งเดียว)
 -- ============================================================
 
@@ -62,6 +62,8 @@ create table if not exists public.teams (
   name text not null,
   school text,
   district text,
+  division text check (division in ('junior', 'senior')),
+  teacher text,
   seed int,
   logo_url text,
   color text,
@@ -75,6 +77,7 @@ create table if not exists public.players (
   team_id uuid not null references public.teams (id) on delete cascade,
   name text not null,
   ign text,
+  level text,
   role text,
   is_sub boolean not null default false,
   sort int not null default 0
@@ -85,13 +88,16 @@ create index if not exists players_team_idx on public.players (team_id);
 -- ── คู่การแข่งขัน ───────────────────────────────────────────
 create table if not exists public.matches (
   id uuid primary key default gen_random_uuid(),
-  code text not null,
+  code text not null unique,
   game_slug text not null default 'rov',
+  division text check (division in ('junior', 'senior')),
   round_name text not null,
   round_order int not null default 1,
   slot int not null default 1,
   team_a_id uuid references public.teams (id) on delete set null,
   team_b_id uuid references public.teams (id) on delete set null,
+  label_a text,
+  label_b text,
   score_a int,
   score_b int,
   best_of int not null default 3,
@@ -102,7 +108,18 @@ create table if not exists public.matches (
   updated_at timestamptz not null default now()
 );
 
-create index if not exists matches_order_idx on public.matches (round_order, slot);
+create index if not exists matches_order_idx on public.matches (division, round_order, slot);
+
+-- สำหรับฐานข้อมูลที่สร้างไว้ก่อนหน้า — เพิ่มคอลัมน์ที่ยังไม่มี
+alter table public.teams   add column if not exists division text;
+alter table public.teams   add column if not exists teacher text;
+alter table public.players add column if not exists level text;
+alter table public.matches add column if not exists division text;
+alter table public.matches add column if not exists label_a text;
+alter table public.matches add column if not exists label_b text;
+
+-- ต้องมี unique index บน code เพื่อให้ไฟล์ seed ใช้ on conflict (code) ได้
+create unique index if not exists matches_code_key on public.matches (code);
 
 -- ── กำหนดการ ────────────────────────────────────────────────
 create table if not exists public.schedule_items (

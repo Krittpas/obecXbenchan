@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import MatchCard from "./MatchCard";
 import { createBrowserSupabase } from "@/lib/supabase/client";
-import type { Match, Round } from "@/lib/types";
+import { DIVISION_LABEL, type Division, type Match, type Round } from "@/lib/types";
 
 const MATCH_SELECT =
   "*, team_a:teams!matches_team_a_id_fkey(*), team_b:teams!matches_team_b_id_fkey(*)";
@@ -31,6 +31,7 @@ export default function LiveBoard({ initial }: { initial: Match[] }) {
     const { data, error } = await db
       .from("matches")
       .select(MATCH_SELECT)
+      .order("division")
       .order("round_order")
       .order("slot");
     if (!error && data) {
@@ -61,8 +62,8 @@ export default function LiveBoard({ initial }: { initial: Match[] }) {
     };
   }, [refresh]);
 
-  const rounds = group(matches);
   const live = matches.filter((m) => m.status === "live");
+  const divisions: Division[] = ["junior", "senior"];
 
   return (
     <>
@@ -86,28 +87,44 @@ export default function LiveBoard({ initial }: { initial: Match[] }) {
         </section>
       )}
 
-      {rounds.map((round) => (
-        <section key={round.order} style={{ padding: "0 0 2rem" }}>
-          <h2
-            style={{
-              fontSize: 13,
-              letterSpacing: "0.08em",
-              color: "var(--mute)",
-              borderBottom: "1px solid var(--line)",
-              paddingBottom: "0.45rem",
-              marginBottom: "0.9rem",
-              textTransform: "uppercase",
-            }}
-          >
-            {round.name}
-          </h2>
-          <div className="grid-3">
-            {round.matches.map((m) => (
-              <MatchCard key={m.id} match={m} />
+      {divisions.map((division) => {
+        const rounds = group(matches.filter((m) => m.division === division));
+        if (rounds.length === 0) return null;
+
+        return (
+          <div key={division} id={division} style={{ marginBottom: "1rem" }}>
+            <div className="div-head">
+              <h2>{DIVISION_LABEL[division]}</h2>
+              <span className="meta">
+                {rounds.reduce((n, r) => n + r.matches.length, 0)} คู่
+              </span>
+            </div>
+
+            {rounds.map((round) => (
+              <section key={round.order} style={{ padding: "0 0 2rem" }}>
+                <h3
+                  style={{
+                    fontSize: 13,
+                    letterSpacing: "0.08em",
+                    color: "var(--mute)",
+                    borderBottom: "1px solid var(--line)",
+                    paddingBottom: "0.45rem",
+                    marginBottom: "0.9rem",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {round.name}
+                </h3>
+                <div className="grid-3">
+                  {round.matches.map((m) => (
+                    <MatchCard key={m.id} match={m} />
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
-        </section>
-      ))}
+        );
+      })}
     </>
   );
 }

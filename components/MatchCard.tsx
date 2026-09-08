@@ -24,32 +24,33 @@ export default function MatchCard({ match, isFinal = false }: { match: Match; is
   const teamA = match.team_a ?? null;
   const teamB = match.team_b ?? null;
 
-  const cls = [
-    "match",
-    match.status === "live" ? "is-live" : "",
-    isFinal ? "is-final" : "",
-  ]
+  const cls = ["match", match.status === "live" ? "is-live" : "", isFinal ? "is-final" : ""]
     .filter(Boolean)
     .join(" ");
+
+  const when = match.scheduled_at ? ` · ${thaiDateTimeShort(match.scheduled_at)}` : "";
 
   return (
     <article className={cls} aria-label={`คู่ ${match.code}`}>
       <header className="match-cap">
         <span>
-          {match.code} · {thaiDateTimeShort(match.scheduled_at)} · Bo{match.best_of}
+          คู่ {match.code}
+          {when} · Bo{match.best_of}
         </span>
         <StatusPill status={match.status} />
       </header>
 
       <div className={sideClass(match, "a")}>
         <span className="chip" style={teamA?.color ? { background: teamA.color } : undefined} />
-        <span className="nm">{teamA?.name ?? "รอผู้ชนะรอบก่อนหน้า"}</span>
+        <span className="nm">{teamA?.name ?? match.label_a ?? "รอผู้ชนะรอบก่อนหน้า"}</span>
+        {teamA?.seed ? <span className="sd">#{teamA.seed}</span> : null}
         <span className="sc num">{match.score_a ?? "–"}</span>
       </div>
 
       <div className={sideClass(match, "b")}>
         <span className="chip" style={teamB?.color ? { background: teamB.color } : undefined} />
-        <span className="nm">{teamB?.name ?? "รอผู้ชนะรอบก่อนหน้า"}</span>
+        <span className="nm">{teamB?.name ?? match.label_b ?? "รอผู้ชนะรอบก่อนหน้า"}</span>
+        {teamB?.seed ? <span className="sd">#{teamB.seed}</span> : null}
         <span className="sc num">{match.score_b ?? "–"}</span>
       </div>
 
