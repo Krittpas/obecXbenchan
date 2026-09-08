@@ -123,6 +123,14 @@ export type GalleryItem = {
 
 export type Rule = { id: string; heading: string; body: string; sort: number };
 export type Faq = { id: string; question: string; answer: string; sort: number };
+export type Prize = {
+  id: string;
+  place: string;
+  amount: string;
+  note: string | null;
+  sort: number;
+};
+
 export type Sponsor = {
   id: string;
   name: string;

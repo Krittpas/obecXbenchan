@@ -6,6 +6,7 @@ import {
   fallbackGames,
   fallbackMatches,
   fallbackNews,
+  fallbackPrizes,
   fallbackRules,
   fallbackSchedule,
   fallbackSettings,
@@ -20,6 +21,7 @@ import type {
   Game,
   Match,
   NewsPost,
+  Prize,
   Round,
   Rule,
   ScheduleItem,
@@ -161,6 +163,10 @@ export async function getGallery(): Promise<GalleryItem[]> {
     (db) => db.from("gallery").select("*").order("sort"),
     fallbackGallery,
   );
+}
+
+export async function getPrizes(): Promise<Prize[]> {
+  return read<Prize[]>((db) => db.from("prizes").select("*").order("sort"), fallbackPrizes);
 }
 
 export async function getSponsors(): Promise<Sponsor[]> {

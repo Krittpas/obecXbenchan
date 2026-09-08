@@ -54,7 +54,7 @@ export function TeamCard({ team }: { team: Team }) {
         <h3>{team.name}</h3>
         <span className="school">
           {team.division ? DIVISION_LABEL[team.division] : "ยังไม่ระบุรุ่น"}
-          {team.teacher ? ` · ครู${team.teacher}` : ""}
+          {team.teacher ? ` · ครูที่ปรึกษา ${team.teacher}` : ""}
         </span>
         {team.note && <span className="tag"> · {team.note}</span>}
       </span>

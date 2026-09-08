@@ -57,7 +57,7 @@ export default async function HomePage() {
       {/* ── ฮีโร่ ── */}
       <div className="hero" id="top">
         <div className="shell hero-in">
-          <p className="crest">การแข่งขันกีฬาอีสปอร์ต RoV นักเรียน สังกัด สพฐ. ประจำปี 2569</p>
+          <p className="crest">ROV TOURNAMENT 2026 · ชิงชนะเลิศแห่งจังหวัดจันทบุรี ประจำปี 2569</p>
 
           <h1>{settings.event_short}</h1>
           <p className="hero-sub">{settings.tagline}</p>
@@ -111,7 +111,7 @@ export default async function HomePage() {
         <div className="shell">
           <SectionHead
             title="รายการที่เปิดแข่ง"
-            lead="แข่งขัน RoV รายการเดียว แบ่งเป็นรุ่น ม.ต้น และรุ่น ม.ปลาย ชิงแชมป์รุ่นละหนึ่งทีม"
+            lead="แข่งขัน RoV รายการเดียว แบ่งเป็นรุ่น ม.ต้น (ม.1–ม.3) และรุ่น ม.ปลาย (ม.4–ม.6) ชิงแชมป์รุ่นละหนึ่งทีม"
           />
 
           <div className="grid-4" style={{ marginBottom: "1.6rem" }}>
@@ -119,8 +119,8 @@ export default async function HomePage() {
               <dl>
                 <dt>รูปแบบการแข่งขัน</dt>
                 <dd>
-                  แพ้คัดออก
-                  <small>สายเดียว Bo3 · รอบชิงชนะเลิศ Bo5</small>
+                  Bo3 ทุกแมตช์
+                  <small>รอบ 16 และ 8 ทีมแพ้คัดออก · รอบ 4 ทีมสายบน–สายล่าง</small>
                 </dd>
               </dl>
             </div>
@@ -146,10 +146,10 @@ export default async function HomePage() {
             </div>
             <div className="card fact">
               <dl>
-                <dt>ค่าสมัคร</dt>
+                <dt>รางวัลชนะเลิศ</dt>
                 <dd>
-                  ไม่มี
-                  <small>ผู้ชมเข้าชมฟรีตลอดงาน</small>
+                  3,000 บาท
+                  <small>รุ่นละ 1 รางวัล พร้อมเกียรติบัตร</small>
                 </dd>
               </dl>
             </div>
@@ -308,8 +308,8 @@ export default async function HomePage() {
               <div className="venue-card">
                 <h3>สิ่งที่นักกีฬาต้องเตรียม</h3>
                 <p>
-                  บัตรประจำตัวนักเรียนหรือบัตรประชาชน หนังสือรับรองจากสถานศึกษา
-                  และมารายงานตัวก่อนเวลาแข่งอย่างน้อย 30 นาที
+                  บัตรประจำตัวนักเรียน อุปกรณ์ส่วนตัวที่ผ่านการตรวจจากกรรมการ
+                  และมารายงานตัว ณ จุดที่กำหนดก่อนเวลาแข่งขัน 15 นาที
                 </p>
               </div>
               <div className="venue-card">

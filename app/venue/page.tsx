@@ -18,7 +18,7 @@ export default async function VenuePage() {
       <PageHead
         kicker="VENUE"
         title="สนามแข่งขันและการเดินทาง"
-        lead="แข่งขันในสถานที่จริง ผู้สนใจเข้าชมได้ฟรีตลอดสองวัน"
+        lead="จัดโดยสมาคมกีฬาแห่งจังหวัดจันทบุรี ร่วมกับโรงเรียนเบญจมราชูทิศ จังหวัดจันทบุรี · เข้าชมฟรีตลอดสองวัน"
       />
       <section>
         <div className="shell grid-2">
@@ -64,8 +64,9 @@ export default async function VenuePage() {
             <div className="venue-card">
               <h3>สิ่งที่นักกีฬาต้องเตรียมมา</h3>
               <p>
-                บัตรประจำตัวนักเรียนหรือบัตรประชาชน หนังสือรับรองสถานภาพนักเรียน
-                อุปกรณ์ส่วนตัวที่ได้รับอนุญาต และรายงานตัวก่อนเวลาแข่งอย่างน้อย 30 นาที
+                บัตรประจำตัวนักเรียน และอุปกรณ์ส่วนตัวที่ต้องผ่านการตรวจจากกรรมการก่อนใช้งาน
+                · รายงานตัว ณ จุดที่คณะกรรมการกำหนดก่อนเวลาแข่งขัน 15 นาที
+                หากเลยเวลาแข่งขันไป 15 นาทีโดยไม่มีเหตุอันสมควรจะถูกปรับเป็นแพ้บาย
               </p>
             </div>
             <div className="venue-card">
@@ -78,6 +79,10 @@ export default async function VenuePage() {
                 <li>
                   <span className="k">LINE</span>
                   <span className="v">{settings.contact_line}</span>
+                </li>
+                <li>
+                  <span className="k">ประธานคณะกรรมการ</span>
+                  <span className="v">นายศิรปัญจพล พงสินณัฐญากร</span>
                 </li>
                 <li>
                   <span className="k">เพจประชาสัมพันธ์</span>

@@ -168,6 +168,15 @@ create table if not exists public.gallery (
   sort int not null default 0
 );
 
+-- ── รางวัลการแข่งขัน ────────────────────────────────────────
+create table if not exists public.prizes (
+  id uuid primary key default gen_random_uuid(),
+  place text not null,
+  amount text default '',
+  note text,
+  sort int not null default 0
+);
+
 create table if not exists public.sponsors (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -209,6 +218,7 @@ alter table public.faqs enable row level security;
 alter table public.news enable row level security;
 alter table public.gallery enable row level security;
 alter table public.sponsors enable row level security;
+alter table public.prizes enable row level security;
 alter table public.registrations enable row level security;
 
 -- ผู้ดูแลอ่านแถวของตัวเองได้ เพื่อให้เว็บตรวจสิทธิ์ได้
@@ -223,7 +233,7 @@ declare
 begin
   foreach t in array array[
     'settings', 'games', 'teams', 'players', 'matches',
-    'schedule_items', 'rules', 'faqs', 'news', 'gallery', 'sponsors'
+    'schedule_items', 'rules', 'faqs', 'news', 'gallery', 'sponsors', 'prizes'
   ]
   loop
     execute format('drop policy if exists %I_public_read on public.%I', t, t);

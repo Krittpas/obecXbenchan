@@ -48,7 +48,7 @@ export default async function TeamPage({ params }: Params) {
         <div className="shell">
           <div className="row" style={{ marginBottom: "1.6rem" }}>
             {team.seed ? <span className="pill pill-gold">ทีมวางอันดับ {team.seed}</span> : null}
-            {team.teacher && <span className="pill pill-wait">ครูผู้ควบคุม: {team.teacher}</span>}
+            {team.teacher && <span className="pill pill-wait">ครูที่ปรึกษาประจำทีม: {team.teacher}</span>}
             {team.note && <span className="pill pill-wait">{team.note}</span>}
             <Link className="btn btn-ink btn-sm" href="/teams">
               ← กลับไปหน้ารายชื่อทีม
