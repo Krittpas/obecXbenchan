@@ -1,12 +1,5 @@
 export const TZ = "Asia/Bangkok";
 
-const THAI_DIGITS = ["๐", "๑", "๒", "๓", "๔", "๕", "๖", "๗", "๘", "๙"];
-
-/** แปลงเลขอารบิกเป็นเลขไทย ใช้กับหัวข้อที่ต้องการอารมณ์เอกสารราชการ */
-export function toThaiDigits(value: string | number): string {
-  return String(value).replace(/\d/g, (d) => THAI_DIGITS[Number(d)]);
-}
-
 export function buddhistYear(date: Date): number {
   return date.getFullYear() + 543;
 }
@@ -57,6 +50,18 @@ export function thaiDateTimeShort(iso: string | null | undefined): string {
   if (!d) return "—";
   const date = new Intl.DateTimeFormat("th-TH", { timeZone: TZ, day: "numeric", month: "short" }).format(d);
   return `${date} · ${thaiTime(iso)}`;
+}
+
+/** ช่วงวันที่แบบไทย ถ้าเป็นวันเดียวกันจะแสดงวันเดียว */
+export function thaiDateRange(startISO: string, endISO: string): string {
+  const start = thaiDate(startISO);
+  const end = thaiDate(endISO);
+  return start === end ? start : `${start} – ${end}`;
+}
+
+/** เวลาแบบสั้น 07:30 (ไม่มีคำว่า น.) */
+export function clockTime(iso: string | null | undefined): string {
+  return thaiTime(iso).replace(" น.", "");
 }
 
 export function slugify(input: string): string {

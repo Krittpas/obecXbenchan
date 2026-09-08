@@ -26,6 +26,9 @@ export default function SiteFooter({
             <h4>ลัดไปยังหน้า</h4>
             <ul>
               <li>
+                <Link href="/watch">ถ่ายทอดสด</Link>
+              </li>
+              <li>
                 <Link href="/live">ผลสด</Link>
               </li>
               <li>
@@ -37,9 +40,6 @@ export default function SiteFooter({
               <li>
                 <Link href="/teams">ทีมที่เข้าแข่ง</Link>
               </li>
-              <li>
-                <Link href="/register">สมัครแข่งขัน</Link>
-              </li>
             </ul>
           </div>
 
@@ -47,7 +47,17 @@ export default function SiteFooter({
             <h4>ผู้จัดและผู้สนับสนุน</h4>
             <ul>
               {sponsors.map((s) => (
-                <li key={s.id}>{s.name}</li>
+                <li key={s.id}>
+                  {s.logo_url ? (
+                    <span className="sponsor-row">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={s.logo_url} alt="" aria-hidden="true" />
+                      {s.name}
+                    </span>
+                  ) : (
+                    s.name
+                  )}
+                </li>
               ))}
             </ul>
           </div>

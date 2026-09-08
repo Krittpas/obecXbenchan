@@ -75,19 +75,43 @@ export default async function AdminSettingsPage({ searchParams }: Props) {
         </div>
 
         <div className="panel">
-          <h2>การรับสมัคร</h2>
+          <h2>รูปภาพประจำงาน</h2>
+          <div className="field">
+            <label htmlFor="logo_url">ลิงก์โลโก้งาน</label>
+            <input id="logo_url" name="logo_url" type="url" defaultValue={settings.logo_url} />
+            <span className="hint">แสดงบนหัวเว็บแทนสัญลักษณ์หกเหลี่ยม แนะนำภาพจัตุรัส ประมาณ 200×200 px</span>
+          </div>
+          <div className="field">
+            <label htmlFor="hero_image_url">ลิงก์ภาพพื้นหลังหน้าแรก</label>
+            <input
+              id="hero_image_url"
+              name="hero_image_url"
+              type="url"
+              defaultValue={settings.hero_image_url}
+            />
+            <span className="hint">
+              ภาพแนวนอนขนาดใหญ่ ประมาณ 1920×1080 px ระบบจะคลุมด้วยเลเยอร์สีกรมให้อ่านตัวหนังสือได้
+            </span>
+          </div>
+        </div>
+
+        <div className="panel">
+          <h2>การถ่ายทอดสด</h2>
           <label className="checkline" style={{ marginBottom: "0.9rem" }}>
-            <input type="checkbox" name="register_open" defaultChecked={settings.register_open} />
-            เปิดรับสมัครทีม
+            <input type="checkbox" name="stream_live" defaultChecked={settings.stream_live} />
+            กำลังถ่ายทอดสดอยู่ขณะนี้
           </label>
           <div className="field">
-            <label htmlFor="register_deadline">ปิดรับสมัครวันที่</label>
-            <input
-              id="register_deadline"
-              name="register_deadline"
-              type="datetime-local"
-              defaultValue={toDatetimeLocal(settings.register_deadline)}
-            />
+            <label htmlFor="stream_url">ลิงก์ถ่ายทอดสด</label>
+            <input id="stream_url" name="stream_url" type="url" defaultValue={settings.stream_url} />
+            <span className="hint">
+              วางลิงก์ YouTube, Facebook Live หรือ Twitch ได้เลย ระบบจะแปลงเป็นวิดีโอฝังให้อัตโนมัติ
+            </span>
+          </div>
+          <div className="field">
+            <label htmlFor="stream_note">ข้อความประกอบหน้าถ่ายทอดสด</label>
+            <input id="stream_note" name="stream_note" type="text" defaultValue={settings.stream_note} />
+            <span className="hint">แสดงใต้วิดีโอ หรือแสดงแทนเมื่อยังไม่มีลิงก์ถ่ายทอดสด</span>
           </div>
         </div>
 

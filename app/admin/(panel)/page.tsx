@@ -7,23 +7,12 @@ import { thaiDateTimeShort } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
-async function pendingRegistrations(): Promise<number | null> {
-  const db = createAdminSupabase();
-  if (!db) return null;
-  const { count, error } = await db
-    .from("registrations")
-    .select("id", { count: "exact", head: true })
-    .eq("status", "pending");
-  return error ? null : (count ?? 0);
-}
-
 export default async function AdminDashboard() {
-  const [settings, teams, matches, news, pending] = await Promise.all([
+  const [settings, teams, matches, news] = await Promise.all([
     getSettings(),
     getTeams(),
     getMatches(),
     getNews(),
-    pendingRegistrations(),
   ]);
 
   const live = matches.filter((m) => m.status === "live");
@@ -59,8 +48,8 @@ export default async function AdminDashboard() {
           <span>คู่ที่แข่งจบแล้ว</span>
         </div>
         <div className="stat">
-          <b>{pending ?? "–"}</b>
-          <span>ใบสมัครรอตรวจสอบ</span>
+          <b>{settings.stream_live ? "ON AIR" : "OFF"}</b>
+          <span>สถานะถ่ายทอดสด</span>
         </div>
       </div>
 
@@ -114,20 +103,23 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="panel">
-        <h2>สถานะการรับสมัคร</h2>
+        <h2>การถ่ายทอดสดและข่าวสาร</h2>
         <p className="mute">
-          ขณะนี้ {settings.register_open ? "เปิดรับสมัครอยู่" : "ปิดรับสมัครแล้ว"} · มีข่าวเผยแพร่{" "}
-          {news.length} รายการ
+          {settings.stream_live
+            ? "กำลังถ่ายทอดสดอยู่ขณะนี้"
+            : "ยังไม่ได้เปิดสถานะถ่ายทอดสด"}
+          {settings.stream_url ? ` · ลิงก์: ${settings.stream_url}` : " · ยังไม่ได้ใส่ลิงก์ถ่ายทอดสด"} ·
+          มีข่าวเผยแพร่ {news.length} รายการ
         </p>
         <div className="row" style={{ marginTop: "0.8rem" }}>
-          <Link className="btn btn-ink btn-sm" href="/admin/registrations">
-            ตรวจใบสมัคร
-          </Link>
           <Link className="btn btn-ink btn-sm" href="/admin/settings">
-            ตั้งค่างาน
+            ตั้งค่าถ่ายทอดสด
           </Link>
           <Link className="btn btn-ink btn-sm" href="/admin/news">
             เขียนข่าว
+          </Link>
+          <Link className="btn btn-ink btn-sm" href="/watch">
+            ดูหน้าถ่ายทอดสด
           </Link>
         </div>
       </div>

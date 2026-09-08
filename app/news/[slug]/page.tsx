@@ -32,6 +32,14 @@ export default async function NewsPostPage({ params }: Params) {
       <PageHead kicker={thaiDate(post.published_at)} title={post.title} lead={post.excerpt ?? undefined} />
       <section>
         <div className="shell">
+          {post.cover_url && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={post.cover_url}
+              alt=""
+              style={{ width: "100%", marginBottom: "1.6rem", border: "1px solid var(--line)" }}
+            />
+          )}
           <article className="prose">
             {post.body.split("\n").map((line, i) =>
               line.trim() === "" ? null : <p key={i}>{line}</p>,

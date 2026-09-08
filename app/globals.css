@@ -142,6 +142,12 @@ p {
   font-size: 15px;
   clip-path: polygon(50% 0, 100% 26%, 100% 74%, 50% 100%, 0 74%, 0 26%);
 }
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  object-fit: contain;
+}
 .brand b {
   display: block;
   font-weight: 600;
@@ -259,6 +265,10 @@ p {
   position: relative;
   overflow: hidden;
 }
+.hero.has-image {
+  background-size: cover;
+  background-position: center;
+}
 .hero::before {
   content: "";
   position: absolute;
@@ -266,6 +276,12 @@ p {
   background:
     radial-gradient(60% 90% at 88% 10%, rgba(234, 196, 99, 0.16), transparent 60%),
     radial-gradient(70% 100% at 5% 100%, rgba(34, 66, 158, 0.55), transparent 62%);
+}
+/* คลุมภาพพื้นหลังด้วยสีกรมเพื่อให้ตัวหนังสือยังอ่านออก */
+.hero.has-image::before {
+  background:
+    linear-gradient(180deg, rgba(12, 26, 68, 0.86), rgba(20, 38, 92, 0.92)),
+    radial-gradient(60% 90% at 88% 10%, rgba(234, 196, 99, 0.18), transparent 60%);
 }
 .hero-in {
   position: relative;
@@ -893,6 +909,14 @@ tr.is-open td {
   background: var(--navy);
   clip-path: polygon(50% 0, 100% 26%, 100% 74%, 50% 100%, 0 74%, 0 26%);
 }
+.team-logo {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  object-fit: contain;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+}
 .team h3 {
   font-size: 15.5px;
   color: var(--navy);
@@ -992,6 +1016,23 @@ details.faq p {
   background: rgba(255, 255, 255, 0.5);
 }
 
+/* ── ถ่ายทอดสด ───────────────────────────────────────────── */
+.stream-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--navy-deep);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow);
+}
+.stream-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 /* ── รางวัล ──────────────────────────────────────────────── */
 .prizes {
   display: grid;
@@ -1065,6 +1106,27 @@ details.faq p {
 }
 .newsitem:first-child {
   border-top: 1px solid var(--line);
+}
+.newsitem {
+  display: flex;
+  gap: 1.1rem;
+  align-items: flex-start;
+}
+.news-cover {
+  width: 168px;
+  height: 108px;
+  flex: none;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+@media (max-width: 620px) {
+  .newsitem {
+    flex-direction: column;
+  }
+  .news-cover {
+    width: 100%;
+    height: 180px;
+  }
 }
 .newsitem time {
   font-size: 12.5px;
@@ -1255,6 +1317,17 @@ footer.site a {
 footer.site a:hover {
   color: var(--gold-lit);
   text-decoration: underline;
+}
+.sponsor-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sponsor-row img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.9);
 }
 .foot-end {
   padding-top: 1.4rem;

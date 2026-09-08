@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const NAV = [
+  { href: "/watch", label: "ถ่ายทอดสด" },
   { href: "/live", label: "ผลสด" },
   { href: "/bracket", label: "สายการแข่งขัน" },
   { href: "/schedule", label: "กำหนดการ" },
@@ -18,10 +19,10 @@ export const NAV = [
 
 export default function SiteHeader({
   eventShort,
-  registerOpen,
+  logoUrl,
 }: {
   eventShort: string;
-  registerOpen: boolean;
+  logoUrl?: string;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -36,9 +37,15 @@ export default function SiteHeader({
     <header className="topbar">
       <div className="shell topbar-in">
         <Link className="brand" href="/">
-          <span className="brand-mark" aria-hidden="true">
-            บ
-          </span>
+          {logoUrl ? (
+            /* โลโก้จากผู้ดูแล — ใช้ img ธรรมดาเพราะเป็นลิงก์ภายนอกที่กำหนดเองได้ */
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img className="brand-logo" src={logoUrl} alt="" aria-hidden="true" />
+          ) : (
+            <span className="brand-mark" aria-hidden="true">
+              บ
+            </span>
+          )}
           <span>
             <b>{eventShort}</b>
             <span>การแข่งขันกีฬาอีสปอร์ตนักเรียน ประจำปี 2569</span>
@@ -51,11 +58,6 @@ export default function SiteHeader({
               {item.label}
             </Link>
           ))}
-          {registerOpen && (
-            <Link href="/register" aria-current={isOn("/register") ? "page" : undefined}>
-              <b style={{ color: "var(--gold)" }}>สมัครแข่งขัน</b>
-            </Link>
-          )}
         </nav>
 
         <button
@@ -74,7 +76,6 @@ export default function SiteHeader({
             {item.label}
           </Link>
         ))}
-        {registerOpen && <Link href="/register">สมัครแข่งขัน</Link>}
       </div>
     </header>
   );

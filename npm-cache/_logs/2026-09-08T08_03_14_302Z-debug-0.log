@@ -5,10 +5,10 @@
 4 silly config load:file:D:\obecRoV-main\.npmrc
 5 silly config load:file:C:\Users\Admin\.npmrc
 6 silly config load:file:C:\Users\Admin\AppData\Roaming\npm\etc\npmrc
-7 verbose title npm exec tsc --noEmit
-8 verbose argv "exec" "--" "tsc" "--noEmit"
-9 verbose logfile logs-max:10 dir:D:\obecRoV-main\npm-cache\_logs\2026-09-08T07_02_07_403Z-
-10 verbose logfile D:\obecRoV-main\npm-cache\_logs\2026-09-08T07_02_07_403Z-debug-0.log
+7 verbose title npm exec next build
+8 verbose argv "exec" "--" "next" "build"
+9 verbose logfile logs-max:10 dir:D:\obecRoV-main\npm-cache\_logs\2026-09-08T08_03_14_302Z-
+10 verbose logfile D:\obecRoV-main\npm-cache\_logs\2026-09-08T08_03_14_302Z-debug-0.log
 11 silly logfile start cleaning logs, removing 1 files
 12 silly logfile done cleaning log files
 13 verbose cwd D:\obecRoV-main

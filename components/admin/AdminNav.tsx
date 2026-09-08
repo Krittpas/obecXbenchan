@@ -7,7 +7,6 @@ import { RESOURCES } from "@/lib/admin-schema";
 const FIXED = [
   { href: "/admin", label: "ภาพรวม" },
   { href: "/admin/live", label: "คุมผลสดหน้างาน" },
-  { href: "/admin/registrations", label: "ใบสมัคร" },
 ];
 
 export default function AdminNav() {

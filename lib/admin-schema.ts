@@ -221,7 +221,7 @@ export const RESOURCES: Resource[] = [
     table: "games",
     title: "รายการที่เปิดแข่ง",
     singular: "รายการแข่ง",
-    lead: "ชนิดกีฬาอีสปอร์ตที่เปิดรับสมัคร",
+    lead: "ชนิดกีฬาอีสปอร์ตที่จัดแข่งขัน",
     orderBy: [{ column: "sort", ascending: true }],
     primary: "name",
     secondary: ["subtitle"],

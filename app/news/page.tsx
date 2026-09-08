@@ -28,12 +28,18 @@ export default async function NewsPage() {
           ) : (
             posts.map((post) => (
               <Link className="newsitem" href={`/news/${post.slug}`} key={post.id}>
-                <time dateTime={post.published_at}>
-                  {thaiDate(post.published_at)}
-                  {post.pinned ? " · ปักหมุด" : ""}
-                </time>
-                <h3>{post.title}</h3>
-                <p>{post.excerpt}</p>
+                {post.cover_url && (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img className="news-cover" src={post.cover_url} alt="" loading="lazy" />
+                )}
+                <div>
+                  <time dateTime={post.published_at}>
+                    {thaiDate(post.published_at)}
+                    {post.pinned ? " · ปักหมุด" : ""}
+                  </time>
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt}</p>
+                </div>
               </Link>
             ))
           )}

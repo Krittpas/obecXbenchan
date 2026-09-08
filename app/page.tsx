@@ -16,7 +16,7 @@ import {
   getTeams,
 } from "@/lib/queries";
 import { DIVISION_LABEL, type Division } from "@/lib/types";
-import { TZ, thaiDate, thaiDateTimeShort, toThaiDigits } from "@/lib/format";
+import { TZ, clockTime, thaiDateRange, thaiDateTimeShort } from "@/lib/format";
 
 export const revalidate = 60;
 
@@ -28,7 +28,7 @@ function monthYear(iso: string) {
   const d = new Date(iso);
   const month = new Intl.DateTimeFormat("th-TH", { timeZone: TZ, month: "long" }).format(d);
   const year = new Intl.DateTimeFormat("th-TH-u-ca-buddhist", { timeZone: TZ, year: "numeric" }).format(d);
-  return `${month} ${toThaiDigits(year.replace(/[^0-9]/g, ""))}`;
+  return `${month} ${year.replace(/[^0-9]/g, "")}`;
 }
 
 export default async function HomePage() {
@@ -43,8 +43,10 @@ export default async function HomePage() {
     getSponsors(),
   ]);
 
-  const startDay = toThaiDigits(dayNumber(settings.start_at));
-  const endDay = toThaiDigits(dayNumber(settings.end_at));
+  const startDay = dayNumber(settings.start_at);
+  const endDay = dayNumber(settings.end_at);
+  /* งานวันเดียวให้ขึ้นเลขวันเดียว ไม่ต้องมีขีดคั่น */
+  const bigDate = startDay === endDay ? startDay : `${startDay}–${endDay}`;
   const teamsByDiv = byDivision(teams);
   const divisions: Division[] = ["junior", "senior"];
   const upcoming = matches
@@ -55,7 +57,15 @@ export default async function HomePage() {
   return (
     <>
       {/* ── ฮีโร่ ── */}
-      <div className="hero" id="top">
+      <div
+        className={settings.hero_image_url ? "hero has-image" : "hero"}
+        id="top"
+        style={
+          settings.hero_image_url
+            ? { backgroundImage: `url(${settings.hero_image_url})` }
+            : undefined
+        }
+      >
         <div className="shell hero-in">
           <p className="crest">ROV TOURNAMENT 2026 · ชิงชนะเลิศแห่งจังหวัดจันทบุรี ประจำปี 2569</p>
 
@@ -63,15 +73,13 @@ export default async function HomePage() {
           <p className="hero-sub">{settings.tagline}</p>
 
           <div className="datewrap">
-            <div className="bigdate">
-              {startDay}–{endDay}
-            </div>
+            <div className="bigdate">{bigDate}</div>
             <div className="datemeta">
               <span className="m1">{monthYear(settings.start_at)}</span>
               <span className="m2">{settings.venue_name}</span>
               <span className="m3">
-                {thaiDate(settings.start_at)} – {thaiDate(settings.end_at)} · ลงทะเบียนนักกีฬา 08:30 น. ·
-                เข้าชมฟรี
+                {thaiDateRange(settings.start_at, settings.end_at)} · เวลา{" "}
+                {clockTime(settings.start_at)}–{clockTime(settings.end_at)} น. · เข้าชมฟรี
               </span>
             </div>
           </div>
@@ -79,20 +87,14 @@ export default async function HomePage() {
           <Countdown startAt={settings.start_at} endAt={settings.end_at} />
 
           <div className="cta">
-            {settings.register_open ? (
-              <Link className="btn btn-gold" href="/register">
-                สมัครเข้าแข่งขัน
-              </Link>
-            ) : (
-              <Link className="btn btn-gold" href="/live">
-                ดูผลการแข่งขันสด
-              </Link>
-            )}
+            <Link className="btn btn-gold" href="/watch">
+              รับชมการถ่ายทอดสด
+            </Link>
+            <Link className="btn btn-line" href="/live">
+              ผลการแข่งขันสด
+            </Link>
             <Link className="btn btn-line" href="/schedule">
               กำหนดการแข่งขัน
-            </Link>
-            <Link className="btn btn-line" href="/bracket">
-              สายการแข่งขัน
             </Link>
           </div>
         </div>
@@ -278,13 +280,11 @@ export default async function HomePage() {
               <ul className="vlist">
                 <li>
                   <span className="k">วันแข่งขัน</span>
-                  <span className="v">
-                    {thaiDate(settings.start_at)} – {thaiDate(settings.end_at)}
-                  </span>
+                  <span className="v">{thaiDateRange(settings.start_at, settings.end_at)}</span>
                 </li>
                 <li>
                   <span className="k">ลงทะเบียน</span>
-                  <span className="v">08:30 น. หน้าห้องแข่งขัน</span>
+                  <span className="v">{clockTime(settings.start_at)} น. หน้าห้องแข่งขัน</span>
                 </li>
                 <li>
                   <span className="k">ติดต่อสอบถาม</span>

@@ -60,7 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a className="skip" href="#main">
           ข้ามไปยังเนื้อหาหลัก
         </a>
-        <SiteHeader eventShort={settings.event_short} registerOpen={settings.register_open} />
+        <SiteHeader eventShort={settings.event_short} logoUrl={settings.logo_url || undefined} />
         <LiveBar matches={matches} />
         <main id="main">{children}</main>
         <SiteFooter settings={settings} sponsors={sponsors} />

@@ -58,8 +58,7 @@ export default async function TeamsPage() {
                 <span className="meta">{grouped.none.length} ทีม</span>
               </div>
               <p className="note" style={{ marginBottom: "1rem" }}>
-                ทีมเหล่านี้ส่งใบสมัครเข้ามาแล้ว แต่ยังไม่ถูกจัดลงผังสายการแข่งขัน
-                กรุณาตรวจสอบกับฝ่ายจัดการแข่งขัน
+                ทีมเหล่านี้ยังไม่ถูกจัดลงผังสายการแข่งขัน กรุณาตรวจสอบกับฝ่ายจัดการแข่งขัน
               </p>
               <div className="teams">
                 {grouped.none.map((t) => (

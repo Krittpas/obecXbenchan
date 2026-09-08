@@ -46,6 +46,14 @@ export default async function TeamPage({ params }: Params) {
 
       <section>
         <div className="shell">
+          {team.logo_url && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={team.logo_url}
+              alt={`โลโก้ทีม ${team.name}`}
+              style={{ width: 120, height: 120, objectFit: "contain", marginBottom: "1.2rem" }}
+            />
+          )}
           <div className="row" style={{ marginBottom: "1.6rem" }}>
             {team.seed ? <span className="pill pill-gold">ทีมวางอันดับ {team.seed}</span> : null}
             {team.teacher && <span className="pill pill-wait">ครูที่ปรึกษาประจำทีม: {team.teacher}</span>}

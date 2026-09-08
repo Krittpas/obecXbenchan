@@ -47,9 +47,14 @@ export function PageHead({
 export function TeamCard({ team }: { team: Team }) {
   return (
     <Link className="team" href={`/teams/${team.slug}`}>
-      <span className="seed" style={team.color ? { background: team.color } : undefined}>
-        {team.seed ?? "–"}
-      </span>
+      {team.logo_url ? (
+        /* eslint-disable-next-line @next/next/no-img-element */
+        <img className="team-logo" src={team.logo_url} alt="" aria-hidden="true" />
+      ) : (
+        <span className="seed" style={team.color ? { background: team.color } : undefined}>
+          {team.seed ?? "–"}
+        </span>
+      )}
       <span>
         <h3>{team.name}</h3>
         <span className="school">

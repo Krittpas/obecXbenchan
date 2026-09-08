@@ -5,7 +5,6 @@ export type MatchStatus = "wait" | "live" | "done";
 /** รุ่นการแข่งขัน — junior = ม.ต้น, senior = ม.ปลาย */
 export type Division = "junior" | "senior";
 export type Side = "a" | "b";
-export type RegistrationStatus = "pending" | "approved" | "rejected";
 export type TeamStatus = "pending" | "approved";
 
 export type Settings = {
@@ -17,9 +16,16 @@ export type Settings = {
   venue_name: string;
   venue_address: string;
   venue_maps_url: string;
-  register_open: boolean;
-  register_deadline: string | null;
   live_note: string;
+  /** ลิงก์ถ่ายทอดสด รองรับ YouTube / Facebook / Twitch หรือ URL ฝังอื่น */
+  stream_url: string;
+  /** เปิดเป็นจริงเมื่อกำลังถ่ายทอดสดอยู่ */
+  stream_live: boolean;
+  stream_note: string;
+  /** โลโก้งาน แสดงบนหัวเว็บแทนสัญลักษณ์หกเหลี่ยม */
+  logo_url: string;
+  /** ภาพพื้นหลังส่วนฮีโร่หน้าแรก */
+  hero_image_url: string;
   contact_line: string;
   contact_phone: string;
   contact_facebook: string;
@@ -138,28 +144,6 @@ export type Sponsor = {
   logo_url: string | null;
   url: string | null;
   sort: number;
-};
-
-export type RegistrationPlayer = {
-  name: string;
-  ign: string;
-  role: string;
-  is_sub: boolean;
-};
-
-export type Registration = {
-  id: string;
-  team_name: string;
-  school: string;
-  district: string | null;
-  game_slug: string;
-  manager_name: string;
-  manager_phone: string;
-  manager_email: string | null;
-  players: RegistrationPlayer[];
-  note: string | null;
-  status: RegistrationStatus;
-  created_at: string;
 };
 
 export type Round = { name: string; order: number; matches: Match[] };

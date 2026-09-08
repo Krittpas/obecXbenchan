@@ -5,8 +5,9 @@
 4 silly config load:file:D:\obecRoV-main\.npmrc
 5 silly config load:file:C:\Users\Admin\.npmrc
 6 silly config load:file:C:\Users\Admin\AppData\Roaming\npm\etc\npmrc
-7 verbose title npm exec next start -p 3113
-8 verbose argv "exec" "--" "next" "start" "-p" "3113"
-9 verbose logfile logs-max:10 dir:D:\obecRoV-main\npm-cache\_logs\2026-09-08T04_29_38_251Z-
-10 verbose logfile D:\obecRoV-main\npm-cache\_logs\2026-09-08T04_29_38_251Z-debug-0.log
-11 silly logfile done cleaning log files
+7 verbose title npm exec next start -p 3117
+8 verbose argv "exec" "--" "next" "start" "-p" "3117"
+9 verbose logfile logs-max:10 dir:D:\obecRoV-main\npm-cache\_logs\2026-09-08T08_36_14_085Z-
+10 verbose logfile D:\obecRoV-main\npm-cache\_logs\2026-09-08T08_36_14_085Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
+12 silly logfile done cleaning log files

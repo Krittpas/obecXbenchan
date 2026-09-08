@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHead } from "@/components/ui";
 import { getSettings } from "@/lib/queries";
-import { thaiDate } from "@/lib/format";
+import { clockTime, thaiDateRange } from "@/lib/format";
 
 export const revalidate = 300;
 
@@ -28,13 +28,14 @@ export default async function VenuePage() {
             <ul className="vlist">
               <li>
                 <span className="k">วันแข่งขัน</span>
-                <span className="v">
-                  {thaiDate(settings.start_at)} – {thaiDate(settings.end_at)}
-                </span>
+                <span className="v">{thaiDateRange(settings.start_at, settings.end_at)}</span>
               </li>
               <li>
-                <span className="k">ลงทะเบียน</span>
-                <span className="v">08:30 น. หน้าห้องแข่งขัน</span>
+                <span className="k">เวลาแข่งขัน</span>
+                <span className="v">
+                  ลงทะเบียน {clockTime(settings.start_at)} น. · แข่งขันถึง{" "}
+                  {clockTime(settings.end_at)} น.
+                </span>
               </li>
               <li>
                 <span className="k">ทางเข้า</span>

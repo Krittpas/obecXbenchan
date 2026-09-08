@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import ScheduleTabs from "@/components/ScheduleTabs";
 import { PageHead } from "@/components/ui";
 import { getSchedule, getSettings } from "@/lib/queries";
-import { thaiDate } from "@/lib/format";
+import { clockTime, thaiDateRange } from "@/lib/format";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "กำหนดการแข่งขัน",
-  description: "ตารางเวลาการแข่งขันตลอดสองวัน ตั้งแต่ลงทะเบียนจนถึงพิธีมอบรางวัล",
+  description: "ตารางเวลาการแข่งขันตลอดวัน ตั้งแต่ลงทะเบียนจนถึงพิธีมอบรางวัล",
 };
 
 export default async function SchedulePage() {
@@ -19,7 +19,7 @@ export default async function SchedulePage() {
       <PageHead
         kicker="SCHEDULE"
         title="กำหนดการแข่งขัน"
-        lead={`ระหว่างวันที่ ${thaiDate(settings.start_at)} ถึง ${thaiDate(settings.end_at)} เวลาอาจคลาดเคลื่อนตามความเหมาะสมหน้างาน`}
+        lead={`${thaiDateRange(settings.start_at, settings.end_at)} เวลา ${clockTime(settings.start_at)}–${clockTime(settings.end_at)} น. · เวลาอาจคลาดเคลื่อนตามความเหมาะสมหน้างาน`}
       />
       <section>
         <div className="shell">

@@ -7,7 +7,6 @@ import { adminDb } from "@/lib/auth";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { getResource, type Field } from "@/lib/admin-schema";
 import { parseBangkokLocal, slugify } from "@/lib/format";
-import type { RegistrationPlayer } from "@/lib/types";
 
 export type ActionState = { ok: boolean; message: string };
 
@@ -152,72 +151,6 @@ export async function updateScore(form: FormData): Promise<void> {
   redirect("/admin/live?saved=1");
 }
 
-/* ── ใบสมัคร ─────────────────────────────────────────────── */
-
-export async function setRegistrationStatus(form: FormData): Promise<void> {
-  const db = await adminDb();
-  const id = String(form.get("id") ?? "");
-  const status = String(form.get("status") ?? "pending");
-  if (!id) throw new Error("ไม่พบใบสมัคร");
-
-  const { error } = await db.from("registrations").update({ status }).eq("id", id);
-  if (error) throw new Error(error.message);
-
-  refreshSite();
-  redirect("/admin/registrations?saved=1");
-}
-
-/** รับรองใบสมัคร แล้วสร้างทีมพร้อมรายชื่อนักกีฬาให้อัตโนมัติ */
-export async function approveRegistration(form: FormData): Promise<void> {
-  const db = await adminDb();
-  const id = String(form.get("id") ?? "");
-  if (!id) throw new Error("ไม่พบใบสมัคร");
-
-  const { data: reg, error: readError } = await db
-    .from("registrations")
-    .select("*")
-    .eq("id", id)
-    .single();
-  if (readError || !reg) throw new Error(readError?.message ?? "ไม่พบใบสมัคร");
-
-  const { data: team, error: teamError } = await db
-    .from("teams")
-    .insert({
-      name: reg.team_name,
-      slug: slugify(reg.team_name),
-      school: reg.school,
-      district: reg.district,
-      status: "approved",
-    })
-    .select("id")
-    .single();
-  if (teamError || !team) throw new Error(teamError?.message ?? "สร้างทีมไม่สำเร็จ");
-
-  const players = (reg.players ?? []) as RegistrationPlayer[];
-  if (players.length > 0) {
-    const { error: playerError } = await db.from("players").insert(
-      players.map((p, i) => ({
-        team_id: team.id,
-        name: p.name,
-        ign: p.ign || null,
-        role: p.role || null,
-        is_sub: Boolean(p.is_sub),
-        sort: i + 1,
-      })),
-    );
-    if (playerError) throw new Error(playerError.message);
-  }
-
-  const { error: statusError } = await db
-    .from("registrations")
-    .update({ status: "approved" })
-    .eq("id", id);
-  if (statusError) throw new Error(statusError.message);
-
-  refreshSite();
-  redirect("/admin/registrations?approved=1");
-}
-
 /* ── ตั้งค่างาน ─────────────────────────────────────────── */
 
 const SETTINGS_TEXT_FIELDS = [
@@ -228,6 +161,10 @@ const SETTINGS_TEXT_FIELDS = [
   "venue_address",
   "venue_maps_url",
   "live_note",
+  "stream_url",
+  "stream_note",
+  "logo_url",
+  "hero_image_url",
   "contact_line",
   "contact_phone",
   "contact_facebook",
@@ -240,11 +177,11 @@ export async function saveSettings(form: FormData): Promise<void> {
   for (const key of SETTINGS_TEXT_FIELDS) {
     payload[key] = String(form.get(key) ?? "").trim();
   }
-  for (const key of ["start_at", "end_at", "register_deadline"] as const) {
+  for (const key of ["start_at", "end_at"] as const) {
     const date = parseBangkokLocal(String(form.get(key) ?? ""));
     payload[key] = date ? date.toISOString() : null;
   }
-  payload.register_open = form.get("register_open") === "on";
+  payload.stream_live = form.get("stream_live") === "on";
 
   const { error } = await db.from("settings").upsert(payload, { onConflict: "id" });
   if (error) throw new Error(error.message);

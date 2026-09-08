@@ -5,8 +5,12 @@
 
 create extension if not exists pgcrypto;
 
+-- หมายเหตุ: เว็บรุ่นนี้ไม่มีระบบรับสมัครออนไลน์แล้ว
+-- ถ้าฐานข้อมูลเดิมเคยมีตาราง registrations และไม่ต้องการเก็บไว้ ลบได้ด้วย
+--   drop table if exists public.registrations;
+
 -- ── ผู้ดูแลระบบ ──────────────────────────────────────────────
--- เพิ่มแถวที่นี่เพื่อให้บัญชีใน Authentication ใช้แผงผู้ดูแลได้
+-- เพิ่มแถ  วที่นี่เพื่อให้บัญชีใน Authentication ใช้แผงผู้ดูแลได้
 create table if not exists public.admins (
   user_id uuid primary key references auth.users (id) on delete cascade,
   email text,
@@ -34,9 +38,12 @@ create table if not exists public.settings (
   venue_name text not null default '',
   venue_address text not null default '',
   venue_maps_url text not null default '',
-  register_open boolean not null default true,
-  register_deadline timestamptz,
   live_note text not null default '',
+  stream_url text not null default '',
+  stream_live boolean not null default false,
+  stream_note text not null default '',
+  logo_url text not null default '',
+  hero_image_url text not null default '',
   contact_line text not null default '',
   contact_phone text not null default '',
   contact_facebook text not null default '',
@@ -108,15 +115,21 @@ create table if not exists public.matches (
   updated_at timestamptz not null default now()
 );
 
-create index if not exists matches_order_idx on public.matches (division, round_order, slot);
-
 -- สำหรับฐานข้อมูลที่สร้างไว้ก่อนหน้า — เพิ่มคอลัมน์ที่ยังไม่มี
+alter table public.settings add column if not exists stream_url text not null default '';
+alter table public.settings add column if not exists stream_live boolean not null default false;
+alter table public.settings add column if not exists stream_note text not null default '';
+alter table public.settings add column if not exists logo_url text not null default '';
+alter table public.settings add column if not exists hero_image_url text not null default '';
+-- ต้องทำก่อนสร้าง index เพราะ index อ้างถึงคอลัมน์เหล่านี้
 alter table public.teams   add column if not exists division text;
 alter table public.teams   add column if not exists teacher text;
 alter table public.players add column if not exists level text;
 alter table public.matches add column if not exists division text;
 alter table public.matches add column if not exists label_a text;
 alter table public.matches add column if not exists label_b text;
+
+create index if not exists matches_order_idx on public.matches (division, round_order, slot);
 
 -- ต้องมี unique index บน code เพื่อให้ไฟล์ seed ใช้ on conflict (code) ได้
 create unique index if not exists matches_code_key on public.matches (code);
@@ -186,22 +199,6 @@ create table if not exists public.sponsors (
   sort int not null default 0
 );
 
--- ── ใบสมัคร ─────────────────────────────────────────────────
-create table if not exists public.registrations (
-  id uuid primary key default gen_random_uuid(),
-  team_name text not null,
-  school text not null,
-  district text,
-  game_slug text not null default 'rov',
-  manager_name text not null,
-  manager_phone text not null,
-  manager_email text,
-  players jsonb not null default '[]'::jsonb,
-  note text,
-  status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
-  created_at timestamptz not null default now()
-);
-
 -- ============================================================
 --  Row Level Security
 -- ============================================================
@@ -219,7 +216,6 @@ alter table public.news enable row level security;
 alter table public.gallery enable row level security;
 alter table public.sponsors enable row level security;
 alter table public.prizes enable row level security;
-alter table public.registrations enable row level security;
 
 -- ผู้ดูแลอ่านแถวของตัวเองได้ เพื่อให้เว็บตรวจสิทธิ์ได้
 drop policy if exists admins_read_self on public.admins;
@@ -246,23 +242,6 @@ begin
          using (public.is_admin()) with check (public.is_admin())', t, t);
   end loop;
 end $$;
-
--- ใบสมัคร: ใครก็ส่งได้ แต่อ่าน/แก้ไขได้เฉพาะผู้ดูแล
-drop policy if exists registrations_public_insert on public.registrations;
-create policy registrations_public_insert on public.registrations
-  for insert with check (true);
-
-drop policy if exists registrations_admin_read on public.registrations;
-create policy registrations_admin_read on public.registrations
-  for select using (public.is_admin());
-
-drop policy if exists registrations_admin_write on public.registrations;
-create policy registrations_admin_write on public.registrations
-  for update using (public.is_admin()) with check (public.is_admin());
-
-drop policy if exists registrations_admin_delete on public.registrations;
-create policy registrations_admin_delete on public.registrations
-  for delete using (public.is_admin());
 
 -- ============================================================
 --  Realtime — ให้หน้าผลสดอัปเดตทันทีเมื่อกรรมการบันทึกคะแนน
