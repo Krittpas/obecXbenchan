@@ -119,8 +119,8 @@ export default async function HomePage() {
               <dl>
                 <dt>รูปแบบการแข่งขัน</dt>
                 <dd>
-                  Bo3 ทุกแมตช์
-                  <small>รอบ 16 และ 8 ทีมแพ้คัดออก · รอบ 4 ทีมสายบน–สายล่าง</small>
+                  แพ้คัดออก
+                  <small>ทุกรอบ Bo3 · แพ้ตกรอบทันที</small>
                 </dd>
               </dl>
             </div>
