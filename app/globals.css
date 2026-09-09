@@ -703,26 +703,45 @@ tr.is-open td {
   overflow-x: auto;
   padding-bottom: 0.6rem;
 }
-.bracket {
-  display: flex;
-  gap: 1.6rem;
+/* ผังสายวางตำแหน่งด้วยพิกัดที่คำนวณใน components/Bracket.tsx
+   เพื่อให้คู่รอบถัดไปอยู่กึ่งกลางระหว่างคู่ที่ป้อนเข้ามาพอดี */
+.bracket-canvas {
+  position: relative;
   min-width: max-content;
-  align-items: stretch;
 }
-.round {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  gap: 1rem;
-  min-width: 268px;
-}
-.round > h3 {
+.bracket-round-head {
+  position: absolute;
+  top: 0;
   font-size: 12.5px;
   letter-spacing: 0.08em;
   color: var(--mute);
   text-transform: uppercase;
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.4rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bracket-slot {
+  position: absolute;
+}
+.bracket-line {
+  position: absolute;
+  background: var(--line-strong);
+  pointer-events: none;
+}
+/* ล็อกความสูงการ์ดให้ตรงกับค่าที่ใช้คำนวณพิกัด (CARD_H) */
+.bracket-slot .match {
+  height: 106px;
+  display: flex;
+  flex-direction: column;
+}
+.bracket-slot .match-cap {
+  flex: none;
+}
+.bracket-slot .side {
+  flex: 1;
+  min-height: 0;
 }
 
 .match {

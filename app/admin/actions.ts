@@ -118,6 +118,47 @@ export async function deleteRecord(form: FormData): Promise<void> {
 
 /* ── ควบคุมผลสดหน้างาน ──────────────────────────────────── */
 
+type MatchLink = {
+  team_a_id: string | null;
+  team_b_id: string | null;
+  next_code: string | null;
+  next_slot: number | null;
+};
+
+/**
+ * เลื่อนผู้ชนะของแมตช์ไปลงคู่ถัดไปตามผังสายโดยอัตโนมัติ
+ * ถ้าแมตช์ยังไม่จบหรือแก้ผลใหม่ จะล้าง/เขียนทับช่องปลายทางให้ตรงกับผลล่าสุด
+ */
+async function advanceWinner(
+  db: Awaited<ReturnType<typeof adminDb>>,
+  match: MatchLink,
+  status: string,
+  winner: string | null,
+) {
+  if (!match.next_code || !match.next_slot) return;
+
+  const column = match.next_slot === 2 ? "team_b_id" : "team_a_id";
+  const winnerTeamId =
+    winner === "a" ? match.team_a_id : winner === "b" ? match.team_b_id : null;
+
+  if (status === "done" && winnerTeamId) {
+    await db.from("matches").update({ [column]: winnerTeamId }).eq("code", match.next_code);
+    return;
+  }
+
+  /* ยังไม่จบหรือยังไม่รู้ผู้ชนะ — ล้างช่องปลายทางเฉพาะเมื่อค่าที่ค้างอยู่มาจากคู่นี้จริง */
+  const { data: next } = await db
+    .from("matches")
+    .select("team_a_id, team_b_id")
+    .eq("code", match.next_code)
+    .maybeSingle();
+
+  const held = (next as Record<string, string | null> | null)?.[column] ?? null;
+  if (held && (held === match.team_a_id || held === match.team_b_id)) {
+    await db.from("matches").update({ [column]: null }).eq("code", match.next_code);
+  }
+}
+
 export async function updateScore(form: FormData): Promise<void> {
   const db = await adminDb();
   const id = String(form.get("id") ?? "");
@@ -135,6 +176,13 @@ export async function updateScore(form: FormData): Promise<void> {
   }
   if (status !== "done") winner = null;
 
+  const { data: current, error: readError } = await db
+    .from("matches")
+    .select("team_a_id, team_b_id, next_code, next_slot")
+    .eq("id", id)
+    .single();
+  if (readError || !current) throw new Error(readError?.message ?? "ไม่พบคู่แข่งขัน");
+
   const { error } = await db
     .from("matches")
     .update({
@@ -146,6 +194,8 @@ export async function updateScore(form: FormData): Promise<void> {
     .eq("id", id);
 
   if (error) throw new Error(error.message);
+
+  await advanceWinner(db, current as unknown as MatchLink, status, winner);
 
   refreshSite();
   redirect("/admin/live?saved=1");

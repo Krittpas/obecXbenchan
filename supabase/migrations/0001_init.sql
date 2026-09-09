@@ -112,6 +112,9 @@ create table if not exists public.matches (
   winner text check (winner in ('a', 'b')),
   scheduled_at timestamptz,
   note text,
+  -- ผู้ชนะของแมตช์นี้จะถูกเลื่อนไปลงคู่ next_code ช่อง next_slot โดยอัตโนมัติ
+  next_code text,
+  next_slot int check (next_slot in (1, 2)),
   updated_at timestamptz not null default now()
 );
 
@@ -128,6 +131,8 @@ alter table public.players add column if not exists level text;
 alter table public.matches add column if not exists division text;
 alter table public.matches add column if not exists label_a text;
 alter table public.matches add column if not exists label_b text;
+alter table public.matches add column if not exists next_code text;
+alter table public.matches add column if not exists next_slot int;
 
 create index if not exists matches_order_idx on public.matches (division, round_order, slot);
 

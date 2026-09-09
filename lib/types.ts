@@ -91,6 +91,10 @@ export type Match = {
   winner: Side | null;
   scheduled_at: string | null;
   note: string | null;
+  /** รหัสคู่ที่ผู้ชนะของแมตช์นี้จะไปเล่นต่อ (null = คู่สุดท้ายของสาย) */
+  next_code: string | null;
+  /** ผู้ชนะจะไปเป็นทีมฝั่งไหนของคู่ถัดไป — 1 = ทีม A, 2 = ทีม B */
+  next_slot: number | null;
   /* เติมให้ตอน query */
   team_a?: Team | null;
   team_b?: Team | null;

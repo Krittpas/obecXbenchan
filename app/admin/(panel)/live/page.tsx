@@ -18,6 +18,8 @@ export default async function AdminLivePage({ searchParams }: Props) {
       <p className="mute" style={{ marginBottom: "1.2rem" }}>
         แก้คะแนนแล้วกดบันทึก หน้าเว็บฝั่งผู้ชมจะอัปเดตทันทีผ่าน Supabase Realtime
         หากตั้งสถานะเป็น “จบแล้ว” โดยไม่เลือกผู้ชนะ ระบบจะตัดสินจากคะแนนให้เอง
+        และจะ<b>ส่งผู้ชนะไปลงคู่ถัดไปตามผังสายให้อัตโนมัติ</b> ไม่ต้องไปจับคู่เองที่เมนูคู่การแข่งขัน
+        · หากแก้ผลภายหลัง ระบบจะอัปเดตคู่ถัดไปให้ตามผลล่าสุด
       </p>
 
       {saved && (
@@ -79,6 +81,18 @@ export default async function AdminLivePage({ searchParams }: Props) {
                 บันทึก
               </button>
             </form>
+
+            {m.next_code ? (
+              <p className="mute" style={{ fontSize: 12.5, marginTop: "0.6rem" }}>
+                เมื่อตั้งสถานะเป็น “จบแล้ว” ระบบจะส่งผู้ชนะไปเป็น
+                {m.next_slot === 2 ? " ทีม B " : " ทีม A "}
+                ของคู่ {m.next_code} ให้อัตโนมัติ
+              </p>
+            ) : (
+              <p className="mute" style={{ fontSize: 12.5, marginTop: "0.6rem" }}>
+                คู่สุดท้ายของสาย — ผู้ชนะคือแชมป์ประจำรุ่น
+              </p>
+            )}
           </div>
         ))
       )}

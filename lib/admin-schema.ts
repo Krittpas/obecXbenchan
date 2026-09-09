@@ -92,6 +92,22 @@ export const RESOURCES: Resource[] = [
           { value: "b", label: "ทีม B" },
         ],
       },
+      {
+        name: "next_code",
+        label: "ผู้ชนะไปคู่",
+        type: "text",
+        hint: "รหัสคู่ถัดไป เช่น J-I · เว้นว่างถ้าเป็นคู่สุดท้าย",
+      },
+      {
+        name: "next_slot",
+        label: "ไปเป็นทีมฝั่ง",
+        type: "select",
+        options: [
+          { value: "", label: "— ไม่เลื่อน —" },
+          { value: "1", label: "ทีม A ของคู่ถัดไป" },
+          { value: "2", label: "ทีม B ของคู่ถัดไป" },
+        ],
+      },
       { name: "scheduled_at", label: "เวลาแข่ง", type: "datetime" },
       { name: "note", label: "หมายเหตุ", type: "text", full: true },
     ],

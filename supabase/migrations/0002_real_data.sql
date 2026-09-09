@@ -276,40 +276,40 @@ join public.teams t on t.slug = v.team_slug;
 -- ── คู่การแข่งขัน ───────────────────────────────────────────
 insert into public.matches (
   code, game_slug, division, round_name, round_order, slot,
-  team_a_id, team_b_id, label_a, label_b, best_of, status
+  team_a_id, team_b_id, label_a, label_b, best_of, status, next_code, next_slot
 )
 select
   v.code, 'rov', v.division, v.round_name, v.round_order, v.slot,
-  ta.id, tb.id, v.label_a, v.label_b, v.best_of, 'wait'
+  ta.id, tb.id, v.label_a, v.label_b, v.best_of, 'wait', v.next_code, v.next_slot
 from (values
-  ('J-A', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 1, 'shadowreaper', 'phoenix', null, null, 3),
-  ('J-B', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 2, 'junior-08', 'limitless', null, null, 3),
-  ('J-C', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 3, 'junior-04', 'junior-13', null, null, 3),
-  ('J-D', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 4, 'junior-05', 'rovbjm', null, null, 3),
-  ('J-E', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 5, 'junior-02', 'junior-15', null, null, 3),
-  ('J-F', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 6, 'vex', 'domino', null, null, 3),
-  ('J-G', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 7, 'junior-03', 'one-thousand-minus-seven', null, null, 3),
-  ('J-H', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 8, 'junior-06', 'barenza-brz', null, null, 3),
-  ('J-I', 'junior', 'รอบ 8 ทีมสุดท้าย', 2, 1, null, null, 'ผู้ชนะคู่ J-A', 'ผู้ชนะคู่ J-B', 3),
-  ('J-J', 'junior', 'รอบ 8 ทีมสุดท้าย', 2, 2, null, null, 'ผู้ชนะคู่ J-C', 'ผู้ชนะคู่ J-D', 3),
-  ('J-K', 'junior', 'รอบ 8 ทีมสุดท้าย', 2, 3, null, null, 'ผู้ชนะคู่ J-E', 'ผู้ชนะคู่ J-F', 3),
-  ('J-L', 'junior', 'รอบ 8 ทีมสุดท้าย', 2, 4, null, null, 'ผู้ชนะคู่ J-G', 'ผู้ชนะคู่ J-H', 3),
-  ('J-M', 'junior', 'รอบรองชนะเลิศ', 3, 1, null, null, 'ผู้ชนะคู่ J-I', 'ผู้ชนะคู่ J-J', 3),
-  ('J-N', 'junior', 'รอบรองชนะเลิศ', 3, 2, null, null, 'ผู้ชนะคู่ J-K', 'ผู้ชนะคู่ J-L', 3),
-  ('J-O', 'junior', 'รอบชิงชนะเลิศ', 4, 1, null, null, 'ผู้ชนะคู่ J-M', 'ผู้ชนะคู่ J-N', 3),
-  ('S-A', 'senior', 'รอบคัดเลือก', 1, 1, 'senior-08', 'fcmarwin', null, null, 3),
-  ('S-B', 'senior', 'รอบคัดเลือก', 1, 2, 'valkyrie', 'quad-reaper', null, null, 3),
-  ('S-C', 'senior', 'รอบคัดเลือก', 1, 3, 'senior-05', 'love-mlbb', null, null, 3),
-  ('S-D', 'senior', 'รอบคัดเลือก', 1, 4, 'senior-07', '40-60', null, null, 3),
-  ('S-E', 'senior', 'รอบคัดเลือก', 1, 5, 'senior-06', 'senior-11', null, null, 3),
-  ('S-F', 'senior', 'รอบ 8 ทีมสุดท้าย', 2, 1, 'benchan-esports-2', null, null, 'ผู้ชนะคู่ S-A', 3),
-  ('S-G', 'senior', 'รอบ 8 ทีมสุดท้าย', 2, 2, null, null, 'ผู้ชนะคู่ S-B', 'ผู้ชนะคู่ S-C', 3),
-  ('S-H', 'senior', 'รอบ 8 ทีมสุดท้าย', 2, 3, 'benchan-esports', null, null, 'ผู้ชนะคู่ S-D', 3),
-  ('S-I', 'senior', 'รอบ 8 ทีมสุดท้าย', 2, 4, 'bjallstar', null, null, 'ผู้ชนะคู่ S-E', 3),
-  ('S-J', 'senior', 'รอบรองชนะเลิศ', 3, 1, null, null, 'ผู้ชนะคู่ S-F', 'ผู้ชนะคู่ S-G', 3),
-  ('S-K', 'senior', 'รอบรองชนะเลิศ', 3, 2, null, null, 'ผู้ชนะคู่ S-H', 'ผู้ชนะคู่ S-I', 3),
-  ('S-L', 'senior', 'รอบชิงชนะเลิศ', 4, 1, null, null, 'ผู้ชนะคู่ S-J', 'ผู้ชนะคู่ S-K', 3)
-) as v(code, division, round_name, round_order, slot, slug_a, slug_b, label_a, label_b, best_of)
+  ('J-A', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 1, 'shadowreaper', 'phoenix', null, null, 3, 'J-I', 1),
+  ('J-B', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 2, 'junior-08', 'limitless', null, null, 3, 'J-I', 2),
+  ('J-C', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 3, 'junior-04', 'junior-13', null, null, 3, 'J-J', 1),
+  ('J-D', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 4, 'junior-05', 'rovbjm', null, null, 3, 'J-J', 2),
+  ('J-E', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 5, 'junior-02', 'junior-15', null, null, 3, 'J-K', 1),
+  ('J-F', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 6, 'vex', 'domino', null, null, 3, 'J-K', 2),
+  ('J-G', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 7, 'junior-03', 'one-thousand-minus-seven', null, null, 3, 'J-L', 1),
+  ('J-H', 'junior', 'รอบ 16 ทีมสุดท้าย', 1, 8, 'junior-06', 'barenza-brz', null, null, 3, 'J-L', 2),
+  ('J-I', 'junior', 'รอบ 8 ทีมสุดท้าย', 2, 1, null, null, 'ผู้ชนะคู่ J-A', 'ผู้ชนะคู่ J-B', 3, 'J-M', 1),
+  ('J-J', 'junior', 'รอบ 8 ทีมสุดท้าย', 2, 2, null, null, 'ผู้ชนะคู่ J-C', 'ผู้ชนะคู่ J-D', 3, 'J-M', 2),
+  ('J-K', 'junior', 'รอบ 8 ทีมสุดท้าย', 2, 3, null, null, 'ผู้ชนะคู่ J-E', 'ผู้ชนะคู่ J-F', 3, 'J-N', 1),
+  ('J-L', 'junior', 'รอบ 8 ทีมสุดท้าย', 2, 4, null, null, 'ผู้ชนะคู่ J-G', 'ผู้ชนะคู่ J-H', 3, 'J-N', 2),
+  ('J-M', 'junior', 'รอบรองชนะเลิศ', 3, 1, null, null, 'ผู้ชนะคู่ J-I', 'ผู้ชนะคู่ J-J', 3, 'J-O', 1),
+  ('J-N', 'junior', 'รอบรองชนะเลิศ', 3, 2, null, null, 'ผู้ชนะคู่ J-K', 'ผู้ชนะคู่ J-L', 3, 'J-O', 2),
+  ('J-O', 'junior', 'รอบชิงชนะเลิศ', 4, 1, null, null, 'ผู้ชนะคู่ J-M', 'ผู้ชนะคู่ J-N', 3, null, null),
+  ('S-A', 'senior', 'รอบคัดเลือก', 1, 1, 'senior-08', 'fcmarwin', null, null, 3, 'S-F', 2),
+  ('S-B', 'senior', 'รอบคัดเลือก', 1, 2, 'valkyrie', 'quad-reaper', null, null, 3, 'S-G', 1),
+  ('S-C', 'senior', 'รอบคัดเลือก', 1, 3, 'senior-05', 'love-mlbb', null, null, 3, 'S-G', 2),
+  ('S-D', 'senior', 'รอบคัดเลือก', 1, 4, 'senior-07', '40-60', null, null, 3, 'S-H', 2),
+  ('S-E', 'senior', 'รอบคัดเลือก', 1, 5, 'senior-06', 'senior-11', null, null, 3, 'S-I', 2),
+  ('S-F', 'senior', 'รอบ 8 ทีมสุดท้าย', 2, 1, 'benchan-esports-2', null, null, 'ผู้ชนะคู่ S-A', 3, 'S-J', 1),
+  ('S-G', 'senior', 'รอบ 8 ทีมสุดท้าย', 2, 2, null, null, 'ผู้ชนะคู่ S-B', 'ผู้ชนะคู่ S-C', 3, 'S-J', 2),
+  ('S-H', 'senior', 'รอบ 8 ทีมสุดท้าย', 2, 3, 'benchan-esports', null, null, 'ผู้ชนะคู่ S-D', 3, 'S-K', 1),
+  ('S-I', 'senior', 'รอบ 8 ทีมสุดท้าย', 2, 4, 'bjallstar', null, null, 'ผู้ชนะคู่ S-E', 3, 'S-K', 2),
+  ('S-J', 'senior', 'รอบรองชนะเลิศ', 3, 1, null, null, 'ผู้ชนะคู่ S-F', 'ผู้ชนะคู่ S-G', 3, 'S-L', 1),
+  ('S-K', 'senior', 'รอบรองชนะเลิศ', 3, 2, null, null, 'ผู้ชนะคู่ S-H', 'ผู้ชนะคู่ S-I', 3, 'S-L', 2),
+  ('S-L', 'senior', 'รอบชิงชนะเลิศ', 4, 1, null, null, 'ผู้ชนะคู่ S-J', 'ผู้ชนะคู่ S-K', 3, null, null)
+) as v(code, division, round_name, round_order, slot, slug_a, slug_b, label_a, label_b, best_of, next_code, next_slot)
 left join public.teams ta on ta.slug = v.slug_a
 left join public.teams tb on tb.slug = v.slug_b
 on conflict (code) do update set
@@ -321,7 +321,9 @@ on conflict (code) do update set
   team_b_id = excluded.team_b_id,
   label_a = excluded.label_a,
   label_b = excluded.label_b,
-  best_of = excluded.best_of;
+  best_of = excluded.best_of,
+  next_code = excluded.next_code,
+  next_slot = excluded.next_slot;
 
 -- ── กำหนดการ (แข่งวันเดียว 07:30–16:30) ─────────────────────
 insert into public.schedule_items (day, day_title, time, title, note, tag, sort) values
